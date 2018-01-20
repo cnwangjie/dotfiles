@@ -1,0 +1,5 @@
+.atom/init.coffee ~/.atom/init.coffee
+.tmux.conf ~/.tmux.conf
+.zshrc ~/.zshrc
+.vscode/keybindings.json ~/.config/Code/User/keybindings.json
+.vscode/settings.json ~/.config/Code/User/settings.json

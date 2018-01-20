@@ -100,6 +100,7 @@ export PATH=$COCOS_TEMPLATES_ROOT:$PATH
 # Enviroment Varibals
 export PATH=/home/wangjie/.npm-global/bin:$PATH
 export PATH=/home/wangjie/.config/composer/vendor/bin:$PATH
+export PATH=$GOPATH/bin:$PATH
 
 #Setting the GEM_PATH and GEM_HOME variables may not be necessary, check 'gem env' output to verify whether both variables already exist 
 GEM_HOME=$(ls -t -U | ruby -e 'puts Gem.user_dir')
