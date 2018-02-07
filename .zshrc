@@ -120,5 +120,7 @@ alias help=/home/wangjie/Workspace/shell/help.sh
 alias tmux="tmux -2"
 source /usr/share/nvm/init-nvm.sh
 
+export PATH=$PATH:/home/wangjie/Workspace/shell
+
 # added by travis gem
 [ -f /home/wangjie/.travis/travis.sh ] && source /home/wangjie/.travis/travis.sh

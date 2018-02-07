@@ -1,6 +1,6 @@
 {
     "window.zoomLevel": 0,
-    "workbench.colorTheme": "One Dark Pro Vivid",
+    "workbench.colorTheme": "One Dark Pro",
     "window.menuBarVisibility": "toggle",
     "workbench.statusBar.visible": true,
     "workbench.activityBar.visible": false,
@@ -8,5 +8,20 @@
     "files.trimTrailingWhitespace": true,
     "editor.renderWhitespace": "boundary",
     "editor.tabSize": 2,
-    "editor.multiCursorModifier": "ctrlCmd"
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.wordWrap": "on",
+    "editor.lineHeight": 32,
+    "editor.rulers": [
+        80
+    ],
+    "editor.renderControlCharacters": true,
+    "editor.glyphMargin": false,
+    "workbench.sideBar.location": "left",
+    "files.exclude":{
+        "**/.git": false,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true
+    }
 }
