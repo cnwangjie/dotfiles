@@ -32,7 +32,7 @@ ZSH_THEME="ys"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="false"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -98,7 +98,9 @@ export COCOS_TEMPLATES_ROOT=/home/wangjie/Workspace/cocos2d-x-3.13.1/cocos2d-x-3
 export PATH=$COCOS_TEMPLATES_ROOT:$PATH
 
 # Enviroment Varibals
+export PATH=/home/wangjie/.yarn/bin:$PATH
 export PATH=/home/wangjie/.npm-global/bin:$PATH
+export PATH=/home/wangjie/.config/yarn/global/node_modules/.bin:$PATH
 export PATH=/home/wangjie/.config/composer/vendor/bin:$PATH
 export PATH=$GOPATH/bin:$PATH
 

@@ -3,3 +3,5 @@
 .zshrc ~/.zshrc
 .vscode/keybindings.json ~/.config/Code/User/keybindings.json
 .vscode/settings.json ~/.config/Code/User/settings.json
+awesome/rc.lua ~/.config/awesome/rc.lua
+awesome/multicolor/theme.lua ~/.config/awesome/themes/multicolor/theme.lua

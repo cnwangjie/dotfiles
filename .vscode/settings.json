@@ -23,5 +23,7 @@
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true
-    }
+    },
+    "explorer.confirmDragAndDrop": false,
+    "vetur.validation.template": false
 }
