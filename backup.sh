@@ -57,8 +57,6 @@ copy() {
     if [ "$sure" != "y" ]; then
       return 1
     fi
-  elif (same "$dst" "$src"); then
-    return 1
   fi
 
   # create parent directory if not exists

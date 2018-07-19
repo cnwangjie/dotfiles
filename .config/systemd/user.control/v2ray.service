@@ -1,0 +1,10 @@
+[Unit]
+Description=v2ray daemon
+
+[Service]
+ExecStart=/home/wangjie/Downloads/v2ray-v3.12-linux-64/v2ray --config=/home/wangjie/Downloads/v2ray-v3.12-linux-64/config.json
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
