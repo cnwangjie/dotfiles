@@ -108,5 +108,19 @@
         "key": "f5",
         "command": "-workbench.action.debug.start",
         "when": "!inDebugMode"
+    },
+    {
+        "key": "shift+alt+b",
+        "command": "-java.workspace.compile"
+    },
+    {
+        "key": "ctrl+alt+-",
+        "command": "-workbench.action.quickInputBack",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "-workbench.action.quickOpenNavigatePreviousInFilePicker",
+        "when": "inFilesPicker && inQuickOpen"
     }
 ]

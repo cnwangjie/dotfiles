@@ -4,5 +4,6 @@
 .vscode/keybindings.json ~/.config/Code/User/keybindings.json
 .vscode/settings.json ~/.config/Code/User/settings.json
 .config/awesome/rc.lua ~/.config/awesome/rc.lua
+.config/awesome/xrandr.lua ~/.config/awesome/xrandr.lua
 .config/awesome/multicolor/theme.lua ~/.config/awesome/themes/multicolor/theme.lua
-.config/systemd/user.control ~/.config/systemd/user.control
+.config/systemd/user.control/ ~/.config/systemd/user.control/

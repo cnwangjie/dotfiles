@@ -25,5 +25,28 @@
         "**/.DS_Store": true
     },
     "explorer.confirmDragAndDrop": false,
-    "vetur.validation.template": false
+    "vetur.validation.template": false,
+    "files.insertFinalNewline": true,
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+    },
+    "files.autoSave": "off",
+    "search.location": "sidebar",
+    "files.eol": "\n",
+    "[markdown]": {
+        "editor.quickSuggestions": true
+    },
+    // "bracketPairColorizer.consecutivePairColors": [
+    //     ["<", "</"],
+    //     ["<", "/>"],
+    //     ["{", "}"],
+    //     ["(", ")"],
+    //     ["[", "]"],
+    //     [
+    //         "Gold",
+    //         "Orchid",
+    //         "LightSkyBlue"
+    //     ],
+    //     "Red"
+    // ]
 }

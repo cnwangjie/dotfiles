@@ -2,7 +2,7 @@
 Description=v2ray daemon
 
 [Service]
-ExecStart=/home/wangjie/Downloads/v2ray-v3.12-linux-64/v2ray --config=/home/wangjie/Downloads/v2ray-v3.12-linux-64/config.json
+ExecStart=/home/wangjie/Downloads/v2ray-v3.31.1-linux-64/v2ray --config=/home/wangjie/Downloads/v2ray-v3.31.1-linux-64/config.json
 Restart=on-failure
 
 [Install]

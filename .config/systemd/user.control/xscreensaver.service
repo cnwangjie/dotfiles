@@ -1,0 +1,10 @@
+[Unit]
+Description=x screen saver daemon
+
+[Service]
+ExecStart=/usr/bin/xscreensaver -no-splash
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

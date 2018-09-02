@@ -6,6 +6,8 @@ SCRIPT_FILE=`realpath $0`
 # dir path of this script
 FILE_PATH=`dirname $SCRIPT_FILE`
 
+SOURCEMAP_PATH="$FILE_PATH/sourcemap"
+
 # script action: "backup" or "restore", default is backup
 ACTION=$1
 
@@ -33,8 +35,12 @@ same() {
     return 1
   fi
 
-  local hash1=`md5sum $1 | cut -d ' ' -f1`
-  local hash2=`md5sum $2 | cut -d ' ' -f1`
+  local size1=`du -shb $1 | cut -f1`
+  local size2=`du -shb $2 | cut -f1`
+  local time1=`stat -c "%Y" $1`
+  local time2=`stat -c "%Y" $2`
+  local hash1="$size1|$time1"
+  local hash2="$size2|$time2"
   if [ "$hash1" = "$hash2" ]; then
     return 0
   else
@@ -57,6 +63,8 @@ copy() {
     if [ "$sure" != "y" ]; then
       return 1
     fi
+  elif (same "$dst" "$src"); then
+    return 1
   fi
 
   # create parent directory if not exists
@@ -66,12 +74,17 @@ copy() {
   # -v display what is being done
   # -f force cover target file
   # -a recursion copy directory
-  cp -v -f -a $src $dst
+  # cp -v -f -a $src $dst
+
+  # -a archive mode
+  # -r recursive
+  echo "$src -> $dst"
+  rsync -a -r $src $dst
 }
 
 main() {
   # handle sourcemap file
-  for section in $(cat sourcemap); do
+  for section in $(cat $SOURCEMAP_PATH); do
     if [ "$loc" = "" ]; then
       local loc=`eval "echo $FILE_PATH/$section"`
     else

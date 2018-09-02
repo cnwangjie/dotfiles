@@ -1,0 +1,10 @@
+[Unit]
+Description=redshift daemon
+
+[Service]
+ExecStart=redshift -t 6000:4500 -l 31.26:121.52 -v -m randr
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

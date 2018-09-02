@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/wangjie/.oh-my-zsh
+  export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -20,7 +20,7 @@ ZSH_THEME="ys"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -51,12 +51,29 @@ COMPLETION_WAITING_DOTS="false"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(autojump zsh_reload)
+plugins=(
+  autojump
+  zsh_reload
+  copybuffer
+  copydir
+  copyfile
+  cp
+  encode64
+  extract
+  git
+  gulp
+  nmap
+)
 
 source $ZSH/oh-my-zsh.sh
 
+# zsh autosuggestions
+# source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# export ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
+# zsh syntax highlighting
+# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # User configuration
-
+export WORKSPACE=$HOME/Workspace
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -86,25 +103,25 @@ source $ZSH/oh-my-zsh.sh
 export GOPATH=/home/wangjie/Gopath
 
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
-export COCOS_CONSOLE_ROOT=/home/wangjie/Workspace/cocos2d-x-3.13.1/cocos2d-x-3.13.1/tools/cocos2d-console/bin
+export COCOS_CONSOLE_ROOT="/home/wangjie/Downloads/cocos2d-x-3.17/tools/cocos2d-console/bin"
 export PATH=$COCOS_CONSOLE_ROOT:$PATH
 
 # Add environment variable COCOS_X_ROOT for cocos2d-x
-export COCOS_X_ROOT=/home/wangjie/Workspace/cocos2d-x-3.13.1
+export COCOS_X_ROOT="/home/wangjie/Downloads"
 export PATH=$COCOS_X_ROOT:$PATH
 
 # Add environment variable COCOS_TEMPLATES_ROOT for cocos2d-x
-export COCOS_TEMPLATES_ROOT=/home/wangjie/Workspace/cocos2d-x-3.13.1/cocos2d-x-3.13.1/templates
+export COCOS_TEMPLATES_ROOT="/home/wangjie/Downloads/cocos2d-x-3.17/templates"
 export PATH=$COCOS_TEMPLATES_ROOT:$PATH
 
 # Enviroment Varibals
-export PATH=/home/wangjie/.yarn/bin:$PATH
-export PATH=/home/wangjie/.npm-global/bin:$PATH
-export PATH=/home/wangjie/.config/yarn/global/node_modules/.bin:$PATH
-export PATH=/home/wangjie/.config/composer/vendor/bin:$PATH
+export PATH=$HOME/.yarn/bin:$PATH
+export PATH=$HOME/.npm-global/bin:$PATH
+export PATH=$HOME/.config/yarn/global/node_modules/.bin:$PATH
+export PATH=$HOME/.config/composer/vendor/bin:$PATH
 export PATH=$GOPATH/bin:$PATH
 
-#Setting the GEM_PATH and GEM_HOME variables may not be necessary, check 'gem env' output to verify whether both variables already exist 
+#Setting the GEM_PATH and GEM_HOME variables may not be necessary, check 'gem env' output to verify whether both variables already exist
 GEM_HOME=$(ls -t -U | ruby -e 'puts Gem.user_dir')
 GEM_PATH=$GEM_HOME
 export PATH=$PATH:$GEM_HOME/bin
@@ -116,13 +133,13 @@ fi
 
 # Aliases
 
-alias upic=/home/wangjie/Workspace/shell/upic.sh
-alias help=/home/wangjie/Workspace/shell/help.sh
+alias upic=$WORKSPACE/shell/upic.sh
+alias help=$WORKSPACE/shell/help.sh
 #eval $(thefuck --alias)
 alias tmux="tmux -2"
 source /usr/share/nvm/init-nvm.sh
 
-export PATH=$PATH:/home/wangjie/Workspace/shell
+export PATH=$PATH:$WORKSPACE/shell
 
 # added by travis gem
 [ -f /home/wangjie/.travis/travis.sh ] && source /home/wangjie/.travis/travis.sh

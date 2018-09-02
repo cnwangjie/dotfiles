@@ -22,6 +22,8 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
 -- }}}
 
+local xrandr = require("xrandr")
+
 -- {{{ Error handling
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -81,7 +83,7 @@ local editor       = os.getenv("EDITOR") or "vim"
 local gui_editor   = "gvim"
 local browser      = "google-chrome-unstable"
 local guieditor    = "code"
-local scrlocker    = "xlock"
+local scrlocker    = "xscreensaver-command --lock"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "browser", "editor", "terminal", "im", "music", "files", "extra" }
@@ -244,6 +246,8 @@ globalkeys = my_table.join(
     -- X screen locker
     awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,
               {description = "lock screen", group = "hotkeys"}),
+
+    awful.key({ modkey, "Control" }, "m", function() xrandr.xrandr() end),
 
     -- Hotkeys
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -657,8 +661,23 @@ awful.rules.rules = {
     { rule = { class = "Firefox" },
       properties = { screen = 1, tag = awful.util.tagnames[1] } },
 
+    { rule = { class = "Chrome" },
+      properties = { screen = 1, tag = awful.util.tagnames[1] } },
+
+    { rule = { class = "Code" },
+      properties = { screen = 1, tag = awful.util.tagnames[2] } },
+
+    { rule = { class = "Gnome-terminal" },
+      properties = { screen = 1, tag = awful.util.tagnames[3] } },
+
+    { rule = { class = "Telegram" },
+      properties = { screen = 1, tag = awful.util.tagnames[4] } },
+
+    { rule = { class = "Netease-cloud-music" },
+      properties = { screen = 1, tag = awful.util.tagnames[5] } },
+
     { rule = { class = "Gimp", role = "gimp-image-window" },
-          properties = { maximized = true } },
+      properties = { maximized = true } },
 }
 -- }}}
 
@@ -728,12 +747,12 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal("mouse::enter", function(c)
-    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-        and awful.client.focus.filter(c) then
-        client.focus = c
-    end
-end)
+-- client.connect_signal("mouse::enter", function(c)
+--     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+--         and awful.client.focus.filter(c) then
+--         client.focus = c
+--     end
+-- end)
 
 -- No border for maximized clients
 function border_adjust(c)
