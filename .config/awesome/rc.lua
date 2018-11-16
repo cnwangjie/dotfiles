@@ -59,6 +59,18 @@ end
 
 run_once({ "unclutter -root" }) -- entries must be comma-separated
 -- }}}
+do
+    awesome.connect_signal("screen::change", function (output, state)
+        local command = ""
+        if state == "Disconnected" then
+            command = "xrandr --output eDP1 --auto --output " .. output .. " --off"
+        else
+            command = "xrandr --output eDP1 --auto --output " .. output .. " --auto --same-as eDP1"
+        end
+        awful.util.spawn(command, false)
+        naughty.notify({ text = output .. state })
+    end)
+end
 
 -- {{{ Variable definitions
 
@@ -253,10 +265,10 @@ globalkeys = my_table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description = "show help", group="awesome"}),
     -- Tag browsing
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
-              {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
-              {description = "view next", group = "tag"}),
+    -- awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
+    --           {description = "view previous", group = "tag"}),
+    -- awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
+    --           {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
@@ -566,7 +578,43 @@ clientkeys = my_table.join(
             c.maximized = not c.maximized
             c:raise()
         end ,
-        {description = "maximize", group = "client"})
+        {description = "maximize", group = "client"}),
+    awful.key({ modkey,           }, "Left",
+        function (c)
+            c.maximized = true
+            c:raise()
+            awful.placement.scale(c.focus, {to_percent = 0.5})
+            awful.placement.maximize_vertically(c.focus, {honor_workarea = true})
+            awful.placement.left(c.focus, {honor_workarea = true})
+        end,
+        {description = "align to the left area", group = "client"}),
+    awful.key({ modkey,           }, "Right",
+        function (c)
+            c.maximized = true
+            c:raise()
+            awful.placement.scale(c.focus, {to_percent = 0.5})
+            awful.placement.maximize_vertically(c.focus, {honor_workarea = true})
+            awful.placement.right(c.focus, {honor_workarea = true})
+        end,
+        {description = "align to the right area", group = "client"}),
+    awful.key({ modkey,           }, "Down",
+        function (c)
+            c.maximized = true
+            c:raise()
+            awful.placement.scale(c.focus, {to_percent = 0.5})
+            awful.placement.maximize_horizontally(c.focus, {honor_workarea = true})
+            awful.placement.bottom(c.focus, {honor_workarea = true})
+        end,
+        {description = "align to the bottom area", group = "client"}),
+    awful.key({ modkey,           }, "Up",
+        function (c)
+            c.maximized = true
+            c:raise()
+            awful.placement.scale(c.focus, {to_percent = 0.5})
+            awful.placement.maximize_horizontally(c.focus, {honor_workarea = true})
+            awful.placement.top(c.focus, {honor_workarea = true})
+        end,
+        {description = "align to the top area", group = "client"})
 )
 
 -- Bind all key numbers to tags.

@@ -140,6 +140,5 @@ alias tmux="tmux -2"
 source /usr/share/nvm/init-nvm.sh
 
 export PATH=$PATH:$WORKSPACE/shell
-
 # added by travis gem
 [ -f /home/wangjie/.travis/travis.sh ] && source /home/wangjie/.travis/travis.sh

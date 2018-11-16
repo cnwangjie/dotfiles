@@ -7,3 +7,6 @@
 .config/awesome/xrandr.lua ~/.config/awesome/xrandr.lua
 .config/awesome/multicolor/theme.lua ~/.config/awesome/themes/multicolor/theme.lua
 .config/systemd/user.control/ ~/.config/systemd/user.control/
+.Xmodmap ~/.Xmodmap
+.xscreensaver ~/.xscreensaver
+

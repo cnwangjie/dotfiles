@@ -122,5 +122,17 @@
         "key": "ctrl+shift+e",
         "command": "-workbench.action.quickOpenNavigatePreviousInFilePicker",
         "when": "inFilesPicker && inQuickOpen"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "-workbench.action.quickOpen"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "workbench.view.explorer"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "-workbench.view.explorer"
     }
 ]
