@@ -1,0 +1,10 @@
+[Unit]
+Description=xcompmgr daemon
+
+[Service]
+ExecStart=xcompmgr
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

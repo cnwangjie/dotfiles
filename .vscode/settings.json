@@ -79,6 +79,7 @@
         "nim": "nim compile --verbosity:0 --hints:off --run"
     },
     "gitlens.codeLens.enabled": false,
+    "window.titleBarStyle": "native",
     // "bracketPairColorizer.consecutivePairColors": [
     //     ["<", "</"],
     //     ["<", "/>"],

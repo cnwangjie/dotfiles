@@ -15,11 +15,10 @@ local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local theme                                     = {}
 theme.confdir                                   = os.getenv("HOME") .. "/.config/awesome/themes/multicolor"
-theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/wp0.jpg"
+theme.wallpaper                                 = os.getenv("HOME") .. "/Downloads/unsplashs481.jpeg"
+-- theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/wp0.jpg"
 theme.font                                      = "xos4 Terminus 8"
-theme.menu_bg_normal                            = "#000000"
-theme.menu_bg_focus                             = "#000000"
-theme.bg_normal                                 = "#000000"
+theme.bg_normal                                 = "#000000cc"
 theme.bg_focus                                  = "#000000"
 theme.bg_urgent                                 = "#000000"
 theme.fg_normal                                 = "#aaaaaa"
@@ -35,7 +34,7 @@ theme.menu_width                                = 130
 theme.menu_submenu_icon                         = theme.confdir .. "/icons/submenu.png"
 theme.menu_fg_normal                            = "#aaaaaa"
 theme.menu_fg_focus                             = "#ff8c00"
-theme.menu_bg_normal                            = "#050505dd"
+theme.menu_bg_normal                            = "#05050577"
 theme.menu_bg_focus                             = "#050505dd"
 theme.widget_temp                               = theme.confdir .. "/icons/temp.png"
 theme.widget_uptime                             = theme.confdir .. "/icons/ac.png"
@@ -259,7 +258,7 @@ function theme.at_screen_connect(s)
     if type(wallpaper) == "function" then
         wallpaper = wallpaper(s)
     end
-    gears.wallpaper.centered(wallpaper, s, nil, 0.8)
+    gears.wallpaper.centered(wallpaper, s, nil, 1)
 
     -- Tags
     awful.tag(awful.util.tagnames, s, awful.layout.layouts)

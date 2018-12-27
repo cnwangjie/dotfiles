@@ -614,7 +614,27 @@ clientkeys = my_table.join(
             awful.placement.maximize_horizontally(c.focus, {honor_workarea = true})
             awful.placement.top(c.focus, {honor_workarea = true})
         end,
-        {description = "align to the top area", group = "client"})
+        {description = "align to the top area", group = "client"}),
+    awful.key({ modkey, "Control"}, "Left",
+        function (c)
+            c.x = c.x - 1
+        end,
+        {description = "move to the direction", group = "client"}),
+    awful.key({ modkey, "Control"}, "Right",
+        function (c)
+            c.x = c.x + 1
+        end,
+        {description = "move to the direction", group = "client"}),
+    awful.key({ modkey, "Control"}, "Down",
+        function (c)
+            c.y = c.y + 1
+        end,
+        {description = "move to the direction", group = "client"}),
+    awful.key({ modkey, "Control"}, "Up",
+        function (c)
+            c.y = c.y - 1
+        end,
+        {description = "move to the direction", group = "client"})
 )
 
 -- Bind all key numbers to tags.
@@ -697,7 +717,7 @@ awful.rules.rules = {
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen,
-                     size_hints_honor = false
+                     size_hints_honor = false,
      }
     },
 
