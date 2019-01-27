@@ -1,0 +1,13 @@
+{
+	"details": {
+		"prefix": "detail",
+		"body": [
+			"<details>",
+			"<summary>$1</summary>",
+			"",
+			"$2",
+			"",
+			"</details>"
+		]
+	}
+}

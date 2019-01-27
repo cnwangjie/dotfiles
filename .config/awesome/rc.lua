@@ -24,6 +24,8 @@ local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local xrandr = require("xrandr")
 
+naughty.config.defaults['icon_size'] = 100
+
 -- {{{ Error handling
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -53,11 +55,15 @@ local function run_once(cmd_arr)
         if firstspace then
             findme = cmd:sub(0, firstspace-1)
         end
-        awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
+        awful.spawn.with_shell(string.format("pgrep -u $USER %s > /dev/null || (%s)", findme, cmd))
     end
 end
 
-run_once({ "unclutter -root" }) -- entries must be comma-separated
+run_once({
+    "gnome-terminal -e tmux",
+    "fcitx",
+    "ss-qt5"
+}) -- entries must be comma-separated
 -- }}}
 do
     awesome.connect_signal("screen::change", function (output, state)
@@ -566,6 +572,13 @@ clientkeys = my_table.join(
               {description = "move to screen", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
+    awful.key({ modKey,           }, "e",      function (c) c.sticky = not c.sticky          end,
+              {description = "toggle sticky", group = "client"}),
+    awful.key({ modKey,           }, "",
+        function (c)
+            awful.titlebar.toggle(c)
+        end,
+        {description = "toggle titlebar", group = "client"}),
     awful.key({ modkey,           }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be

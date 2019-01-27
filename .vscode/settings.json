@@ -17,7 +17,7 @@
     "editor.renderControlCharacters": true,
     "editor.glyphMargin": false,
     "workbench.sideBar.location": "left",
-    "files.exclude":{
+    "files.exclude": {
         "**/.git": false,
         "**/.svn": true,
         "**/.hg": true,
@@ -31,7 +31,6 @@
         "suppressShowKeyBindingsNotice": true
     },
     "files.autoSave": "off",
-    "search.location": "sidebar",
     "files.eol": "\n",
     "[markdown]": {
         "editor.quickSuggestions": true
@@ -80,17 +79,26 @@
     },
     "gitlens.codeLens.enabled": false,
     "window.titleBarStyle": "native",
-    // "bracketPairColorizer.consecutivePairColors": [
-    //     ["<", "</"],
-    //     ["<", "/>"],
-    //     ["{", "}"],
-    //     ["(", ")"],
-    //     ["[", "]"],
-    //     [
-    //         "Gold",
-    //         "Orchid",
-    //         "LightSkyBlue"
-    //     ],
-    //     "Red"
-    // ]
+    "bracketPairColorizer.showBracketsInRuler": true,
+    "bracketPairColorizer.showBracketsInGutter": true,
+    "bracketPairColorizer.showHorizontalScopeLine": false,
+    "bracketPairColorizer.consecutivePairColors": [
+        ["<", "</"],
+        ["<", "/>"],
+        ["{", "}"],
+        ["(", ")"],
+        ["[", "]"],
+        [
+            "Pink",
+            "Yellow",
+            "SkyBlue"
+        ],
+        "Red"
+    ],
+    "editor.fontFamily": "'Fira Code', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontLigatures": true,
+    "workbench.editor.tabCloseButton": "off",
+    "workbench.editor.tabSizing": "shrink",
+    "breadcrumbs.enabled": false,
+    "workbench.iconTheme": "vscode-icons"
 }

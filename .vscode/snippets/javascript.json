@@ -1,0 +1,31 @@
+{
+	"es6 import": {
+		"prefix": "import ",
+		"body": [
+			"import $2 from '$1'",
+			"$3",
+		]
+	},
+	"import commonjs": {
+		"prefix": "const ",
+		"body": [
+			"const $2 = require('$1')",
+			"$3"
+		]
+	},
+	"log": {
+		"prefix": "c",
+		"body": [
+			"console.log($1)",
+			"$2",
+		]
+	},
+	"define method": {
+		"prefix": "const ",
+		"body": [
+			"const $1 = $2 => {",
+			"  $0",
+			"}"
+		]
+	}
+}

@@ -1,10 +1,10 @@
 [Unit]
 Description=redshift daemon
+After=display-manager.service
 
 [Service]
 ExecStart=redshift -t 6000:4500 -l 31.26:121.52 -v -m randr
-Restart=on-failure
+Restart=always
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=default.target
