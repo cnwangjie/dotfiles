@@ -245,15 +245,14 @@ root.buttons(my_table.join(
 -- {{{ Key bindings
 globalkeys = my_table.join(
     ----------------
-    awful.key({ "Shift" }, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -d 0.2 -s -e 'mv $f ~/Pictures/ 2>/dev/null'") end,
-              {description = "take a screenshot with selection", group = "hotkeys"}),
-    awful.key({  }, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -d 0.2 -e 'mv $f ~/Pictures/ 2>/dev/null'") end,
+    awful.key({  }, "Print", function () awful.util.spawn_with_shell("scr.sh") end,
               {description = "take a screenshot", group = "hotkeys"}),
-
-    awful.key({ "Shift", "Control" }, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -d 0.2 -s -e 'mv $f /tmp/tempscr.png 2>/dev/null' && xclip -selection clipboard -t image/png -i /tmp/tempscr.png && rm /tmp/tempscr.png") end,
-              {description = "take a screenshot with selection and copy to clipboard", group = "hotkeys"}),
-    awful.key({ "Control" }, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -d 0.2 -e 'mv $f /tmp/tempscr.png 2>/dev/null' && xclip -selection clipboard -t image/png -i /tmp/tempscr.png && rm /tmp/tempscr.png") end,
+    awful.key({ "Shift" }, "Print", function () awful.util.spawn_with_shell("scr.sh -s") end,
+              {description = "take a screenshot with selection", group = "hotkeys"}),
+    awful.key({ "Control" }, "Print", function () awful.util.spawn_with_shell("scr.sh -c") end,
               {description = "take a screenshot and copy to clipboard", group = "hotkeys"}),
+    awful.key({ "Shift", "Control" }, "Print", function () awful.util.spawn_with_shell("scr.sh -cs") end,
+              {description = "take a screenshot with selection and copy to clipboard", group = "hotkeys"}),
 
     ----------------
     -- Take a screenshot
@@ -572,12 +571,12 @@ clientkeys = my_table.join(
               {description = "move to screen", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
-    awful.key({ modKey,           }, "e",      function (c) c.sticky = not c.sticky          end,
+    awful.key({ modkey,           }, "e",      function (c) c.sticky = not c.sticky            end,
               {description = "toggle sticky", group = "client"}),
-    awful.key({ modKey,           }, "",
+    awful.key({ modkey, "Shift"   }, "b",
         function (c)
             awful.titlebar.toggle(c)
-        end,
+        end ,
         {description = "toggle titlebar", group = "client"}),
     awful.key({ modkey,           }, "n",
         function (c)
