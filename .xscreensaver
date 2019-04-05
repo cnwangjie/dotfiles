@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.39 for wangjie on Sat Aug 18 21:16:00 2018.
+# Written by xscreensaver-demo 5.42 for wangjie on Fri Mar  8 14:39:00 2019.
 # https://www.jwz.org/xscreensaver/
 
 timeout:	0:30:00
@@ -35,7 +35,7 @@ chooseRandomImages: False
 imageDirectory:	
 
 mode:		random
-selected:	-1
+selected:	78
 
 textMode:	date
 textLiteral:	XScreenSaver
@@ -177,7 +177,7 @@ programs:								      \
 				barcode -root				    \n\
   GL: 				blinkbox -root				    \n\
   GL: 				blocktube -root				    \n\
-  GL: 				bouncingcow -root			    \n\
+- GL: 				bouncingcow -root			    \n\
 				cloudlife -root				    \n\
   GL: 				cubestorm -root				    \n\
 				eruption -root				    \n\
@@ -247,7 +247,7 @@ programs:								      \
   GL: 				geodesic -root				    \n\
 				hexadrop -root				    \n\
   GL: 				kaleidocycle -root			    \n\
-  GL: 				quasicrystal -root			    \n\
+- GL: 				quasicrystal -root			    \n\
   GL: 				unknownpleasures -root			    \n\
 				binaryring -root			    \n\
   GL: 				cityflow -root				    \n\
@@ -273,6 +273,10 @@ programs:								      \
   GL: 				maze3d -root				    \n\
   GL: 				peepers -root				    \n\
   GL: 				razzledazzle -root			    \n\
+				filmleader -root			    \n\
+				glitchpeg -root				    \n\
+				vfeedback -root				    \n\
+  GL: 				handsy -root				    \n\
 
 
 pointerPollTime:    0:00:05

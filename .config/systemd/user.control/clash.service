@@ -1,0 +1,10 @@
+[Unit]
+Description=clash daemon
+
+[Service]
+ExecStart=/home/wangjie/Gopath/bin/clash
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+

@@ -61,8 +61,7 @@ end
 
 run_once({
     "gnome-terminal -e tmux",
-    "fcitx",
-    "ss-qt5"
+    "fcitx"
 }) -- entries must be comma-separated
 -- }}}
 do
@@ -245,14 +244,14 @@ root.buttons(my_table.join(
 -- {{{ Key bindings
 globalkeys = my_table.join(
     ----------------
-    awful.key({  }, "Print", function () awful.util.spawn_with_shell("scr.sh") end,
-              {description = "take a screenshot", group = "hotkeys"}),
-    awful.key({ "Shift" }, "Print", function () awful.util.spawn_with_shell("scr.sh -s") end,
-              {description = "take a screenshot with selection", group = "hotkeys"}),
-    awful.key({ "Control" }, "Print", function () awful.util.spawn_with_shell("scr.sh -c") end,
-              {description = "take a screenshot and copy to clipboard", group = "hotkeys"}),
-    awful.key({ "Shift", "Control" }, "Print", function () awful.util.spawn_with_shell("scr.sh -cs") end,
-              {description = "take a screenshot with selection and copy to clipboard", group = "hotkeys"}),
+    awful.key({  }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/scr.sh") end,
+              {description = "take a screenshot", group = "screenshot"}),
+    awful.key({ "Shift" }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/scr.sh -s") end,
+              {description = "take a screenshot with selection", group = "screenshot"}),
+    awful.key({ "Control" }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/scr.sh -c") end,
+              {description = "take a screenshot and copy to clipboard", group = "screenshot"}),
+    awful.key({ "Shift", "Control" }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/scr.sh -cs") end,
+              {description = "take a screenshot with selection and copy to clipboard", group = "screenshot"}),
 
     ----------------
     -- Take a screenshot
@@ -511,17 +510,17 @@ globalkeys = my_table.join(
         {description = "mpc on/off", group = "widgets"}),
 
     -- Copy primary to clipboard (terminals to gtk)
-    awful.key({ modkey }, "c", function () awful.spawn("xsel | xsel -i -b") end,
-              {description = "copy terminal to gtk", group = "hotkeys"}),
+    -- awful.key({ modkey }, "c", function () awful.spawn("xsel | xsel -i -b") end,
+    --           {description = "copy terminal to gtk", group = "hotkeys"}),
     -- Copy clipboard to primary (gtk to terminals)
-    awful.key({ modkey }, "v", function () awful.spawn("xsel -b | xsel") end,
-              {description = "copy gtk to terminal", group = "hotkeys"}),
+    -- awful.key({ modkey }, "v", function () awful.spawn("xsel -b | xsel") end,
+    --           {description = "copy gtk to terminal", group = "hotkeys"}),
 
     -- User programs
-    awful.key({ modkey }, "q", function () awful.spawn(browser) end,
-              {description = "run browser", group = "launcher"}),
-    awful.key({ modkey }, "a", function () awful.spawn(guieditor) end,
-              {description = "run gui editor", group = "launcher"}),
+    -- awful.key({ modkey }, "q", function () awful.spawn(browser) end,
+    --           {description = "run browser", group = "launcher"}),
+    -- awful.key({ modkey }, "a", function () awful.spawn(guieditor) end,
+    --           {description = "run gui editor", group = "launcher"}),
 
     -- Default
     --[[ Menubar
