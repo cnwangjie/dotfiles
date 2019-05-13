@@ -10,4 +10,4 @@
 .config/systemd/user.control/ ~/.config/systemd/user.control/
 .Xmodmap ~/.Xmodmap
 .xscreensaver ~/.xscreensaver
-
+.dnscrypt-proxy.toml ~/.dnscrypt-proxy.toml

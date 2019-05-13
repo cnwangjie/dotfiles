@@ -1,0 +1,10 @@
+[Unit]
+Description=DNSCrypt-proxy client
+
+[Service]
+ExecStart=/usr/bin/dnscrypt-proxy -config /home/wangjie/.dnscrypt-proxy.toml
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+

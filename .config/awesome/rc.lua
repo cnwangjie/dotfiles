@@ -244,13 +244,13 @@ root.buttons(my_table.join(
 -- {{{ Key bindings
 globalkeys = my_table.join(
     ----------------
-    awful.key({  }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/scr.sh") end,
+    awful.key({  }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/local/scr.sh") end,
               {description = "take a screenshot", group = "screenshot"}),
-    awful.key({ "Shift" }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/scr.sh -s") end,
+    awful.key({ "Shift" }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/local/scr.sh -s") end,
               {description = "take a screenshot with selection", group = "screenshot"}),
-    awful.key({ "Control" }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/scr.sh -c") end,
+    awful.key({ "Control" }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/local/scr.sh -c") end,
               {description = "take a screenshot and copy to clipboard", group = "screenshot"}),
-    awful.key({ "Shift", "Control" }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/scr.sh -cs") end,
+    awful.key({ "Shift", "Control" }, "Print", function () awful.util.spawn_with_shell("~/Workspace/shell/local/scr.sh -cs") end,
               {description = "take a screenshot with selection and copy to clipboard", group = "screenshot"}),
 
     ----------------

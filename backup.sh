@@ -84,7 +84,10 @@ copy() {
 
 main() {
   # handle sourcemap file
-  for section in $(cat $SOURCEMAP_PATH); do
+
+  # remove lines start with `#` and empty lines
+  local config=`cat $SOURCEMAP_PATH | sed -e '/^#/d' -e '/^$/d'`
+  for section in $config; do
     if [ "$loc" = "" ]; then
       local loc=`eval "echo $FILE_PATH/$section"`
     else
