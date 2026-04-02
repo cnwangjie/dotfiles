@@ -1,0 +1,6 @@
+theme = "galaxy"
+
+[editor]
+line-number = "relative"
+cursorline = true
+

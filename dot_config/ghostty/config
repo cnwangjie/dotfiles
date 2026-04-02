@@ -1,0 +1,7 @@
+font-family = "FiraCode Nerd Font Mono"
+theme = "Material Ocean"
+window-decoration = false
+fullscreen = "non-native-padded-notch"
+macos-non-native-fullscreen = "visible-menu"
+macos-option-as-alt = left
+shell-integration-features = sudo,ssh-terminfo,ssh-env
