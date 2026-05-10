@@ -22,8 +22,16 @@ else
 fi
 
 if command -v cargo >/dev/null; then
-  echo "==> cargo install (crates)"
-  cargo install{{ range .cargo_crates }} {{ . | quote }}{{ end }} || true
+  if ! command -v cargo-binstall >/dev/null; then
+    echo "==> bootstrap: cargo install cargo-binstall"
+    cargo install cargo-binstall || true
+  fi
+  if command -v cargo-binstall >/dev/null; then
+    echo "==> cargo binstall (crates)"
+    cargo binstall --no-confirm{{ range .cargo_crates }} {{ . | quote }}{{ end }} || true
+  else
+    echo "install-packages: cargo-binstall bootstrap failed, skipping cargo crates" >&2
+  fi
 else
   echo "install-packages: cargo not found, skipping cargo crates" >&2
 fi
