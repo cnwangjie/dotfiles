@@ -3,22 +3,56 @@
 # Re-runs whenever the rendered content below changes.
 # Brewfile content-hash: {{ include "packages/Brewfile" | sha256sum }}
 
-set -euo pipefail
+set -uo pipefail
 
 BREWFILE="{{ .chezmoi.sourceDir }}/packages/Brewfile"
 
 if command -v brew >/dev/null; then
   echo "==> brew bundle --file=$BREWFILE"
-  brew bundle --file="$BREWFILE"
+  brew bundle --file="$BREWFILE" || true
 else
   echo "install-packages: brew not found, skipping Brewfile" >&2
 fi
 
 if command -v bun >/dev/null; then
   echo "==> bun install -g (globals)"
-  bun install -g{{ range .bun_globals }} {{ . | quote }}{{ end }}
+  bun install -g{{ range .bun_globals }} {{ . | quote }}{{ end }} || true
 else
   echo "install-packages: bun not found, skipping bun globals" >&2
+fi
+
+if command -v cargo >/dev/null; then
+  echo "==> cargo install (crates)"
+  cargo install{{ range .cargo_crates }} {{ . | quote }}{{ end }} || true
+else
+  echo "install-packages: cargo not found, skipping cargo crates" >&2
+fi
+
+if command -v go >/dev/null; then
+  echo "==> go install (modules)"
+  {{- range .go_modules }}
+  go install {{ printf "%s@latest" . | quote }} || true
+  {{- end }}
+else
+  echo "install-packages: go not found, skipping go modules" >&2
+fi
+
+if command -v uv >/dev/null; then
+  echo "==> uv tool install"
+  {{- range .uv_tools }}
+  uv tool install {{ . | quote }} || true
+  {{- end }}
+else
+  echo "install-packages: uv not found, skipping uv tools" >&2
+fi
+
+if command -v code >/dev/null; then
+  echo "==> code --install-extension (vscode extensions)"
+  {{- range .vscode_extensions }}
+  code --install-extension {{ . | quote }} --force >/dev/null 2>&1 || echo "  failed: {{ . }}" >&2
+  {{- end }}
+else
+  echo "install-packages: code (vscode) not found, skipping vscode extensions" >&2
 fi
 {{- else -}}
 #!/usr/bin/env bash
