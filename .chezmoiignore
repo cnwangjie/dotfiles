@@ -5,6 +5,10 @@ CLAUDE.md
 .DS_Store
 **/.DS_Store
 
+# Package lists — tracked in git, consumed by run_onchange_install-packages.sh,
+# but never deployed to $HOME (they live at the source root for the install script's reference).
+packages
+
 # Claude Code per-machine runtime / state / caches
 .claude.json
 .claude.json.backup

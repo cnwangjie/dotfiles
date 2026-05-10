@@ -1,0 +1,15 @@
+# Package lists consumed by run_onchange_install-packages.sh.tmpl.
+# brew/cask/tap/vscode/cargo/go/uv live in packages/Brewfile (handled by brew bundle).
+
+bun_globals:
+  - "@google/gemini-cli"
+  - "@larksuite/cli"
+  - "@mariozechner/pi-coding-agent"
+  - "@openai/codex"
+  - bash-language-server
+  - clawhub
+  - eas-cli
+  - mcporter
+  - portless
+  - tsx
+  - wrangler

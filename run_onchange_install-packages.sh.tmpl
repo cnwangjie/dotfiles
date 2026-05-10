@@ -1,0 +1,27 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+# Re-runs whenever the rendered content below changes.
+# Brewfile content-hash: {{ include "packages/Brewfile" | sha256sum }}
+
+set -euo pipefail
+
+BREWFILE="{{ .chezmoi.sourceDir }}/packages/Brewfile"
+
+if command -v brew >/dev/null; then
+  echo "==> brew bundle --file=$BREWFILE"
+  brew bundle --file="$BREWFILE"
+else
+  echo "install-packages: brew not found, skipping Brewfile" >&2
+fi
+
+if command -v bun >/dev/null; then
+  echo "==> bun install -g (globals)"
+  bun install -g{{ range .bun_globals }} {{ . | quote }}{{ end }}
+else
+  echo "install-packages: bun not found, skipping bun globals" >&2
+fi
+{{- else -}}
+#!/usr/bin/env bash
+# install-packages: skipped (chezmoi.os = {{ .chezmoi.os }}, not darwin)
+exit 0
+{{- end -}}
