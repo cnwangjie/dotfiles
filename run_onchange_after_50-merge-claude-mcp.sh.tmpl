@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-# Re-runs whenever the intent file's content changes (hash below makes the
-# rendered script differ, which is what chezmoi's run_onchange_ tracks).
-# intent-hash: {{ include "dot_claude/mcp-servers.json" | sha256sum }}
+# Re-runs whenever the rendered intent file changes. The two hashes below cover
+# both the template structure and the secrets it interpolates, so a key rotation
+# (template text unchanged) still triggers re-merge.
+# intent-hash: {{ include "dot_claude/private_mcp-servers.json.tmpl" | sha256sum }}
+# secret-hash: {{ gopass "mcp/gemini-api-key" | sha256sum }}
 
 set -euo pipefail
 
