@@ -1,3 +1,12 @@
+hs.loadSpoon('SpoonInstall')
+
+spoon.SpoonInstall:andUse("ReloadConfiguration", {
+  start = true,
+})
+
+-- require('ime')
+
+
 local function pressFn(mods, key)
   if key == nil then
     key = mods

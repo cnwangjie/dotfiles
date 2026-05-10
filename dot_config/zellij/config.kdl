@@ -296,12 +296,16 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
+    // smart-tabs location="file:~/.config/zellij/plugins/zellij-smart-tabs.wasm" {
+
+    // }
 }
 
 // Plugins to load in the background when a new session starts
 // eg. "file:/path/to/my-plugin.wasm"
 // eg. "https://example.com/my-plugin.wasm"
 load_plugins {
+    // smart-tabs
 }
 web_client {
     font "monospace"
@@ -337,7 +341,7 @@ theme "nord"
 // The name of the default layout to load on startup
 // Default: "default"
 //
-default_layout "compact"
+default_layout "zjs"
 // default_layout "vertical-tabs-right"
 
 // The folder in which Zellij will look for layouts

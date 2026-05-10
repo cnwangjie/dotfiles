@@ -67,6 +67,7 @@ alias rm="trash"
 alias p="podman"
 alias psc="podman system connection"
 alias pc="podman-compose"
+alias bb="bun --bun"
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias luamake="/Users/wangjie/Workspace/wangjie/luamake/luamake"
