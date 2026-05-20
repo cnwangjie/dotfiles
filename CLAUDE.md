@@ -61,4 +61,4 @@ Especially anywhere under `~/.config`, `~/.claude`, `~/.cache`, or `~/Library`: 
 
 ## Commit style
 
-History is short and casual: `save my mac`, `newborn`, `tmux new config style`, plus dated `YYYY.M.D backup` entries from earlier years. Match that — no Conventional Commits prefix needed. Don't push without being asked.
+Use semantic / Conventional Commit subjects (`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, …). Do **not** use dated `YYYY.M.D backup` subjects — older history has them, but new commits should be semantic even when the change is just a backup of drift. Don't push without being asked.
