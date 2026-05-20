@@ -103,6 +103,8 @@ export PATH=/usr/local/bin:$PATH
 export PATH="/opt/homebrew/bin:$PATH"
 
 eval "$(mise activate zsh)"
+eval "$(pay-respects zsh --alias)"
+
 
 # source /Users/wangjie/.rvm/scripts/rvm
 export PATH=/usr/local/smlnj/bin:"$PATH"
