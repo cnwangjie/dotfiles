@@ -1,0 +1,82 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "edit_predictions": {
+    "provider": "codestral"
+  },
+  "ssh_connections": [
+    {
+      "host": "dev4",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/ubuntu"
+          ]
+        }
+      ]
+    }
+  ],
+  "relative_line_numbers": "enabled",
+  "colorize_brackets": true,
+  "which_key": {
+    "enabled": null,
+  },
+  "minimap": {
+    "thumb": "always",
+    "show": "auto",
+  },
+  "cli_default_open_behavior": "existing_window",
+  "terminal": {
+    "copy_on_select": true,
+  },
+  "agent_servers": {
+    "pi-acp": {
+      "type": "registry",
+    },
+    "claude-acp": {
+      "default_config_options": {
+        "mode": "auto",
+      },
+      "type": "registry",
+    },
+  },
+  "buffer_font_family": "FiraCode Nerd Font Mono",
+  "icon_theme": "Material Icon Theme",
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "One Dark Pro Darker",
+  },
+  "proxy": "",
+  "helix_mode": true,
+  "project_panel": {
+    "dock": "right",
+  },
+  "outline_panel": {
+    "dock": "right",
+  },
+  "collaboration_panel": {
+    "dock": "right",
+  },
+  "agent": {
+    "dock": "left",
+    "favorite_models": [],
+    "model_parameters": [],
+  },
+  "git_panel": {
+    "dock": "right",
+  },
+  "telemetry": {
+    "metrics": false,
+  },
+  "vim_mode": false,
+  "base_keymap": "VSCode",
+  "buffer_font_size": 15,
+}
