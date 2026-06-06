@@ -1,0 +1,26 @@
+{
+  "skill_name": "new-project-scaffold",
+  "evals": [
+    {
+      "id": 0,
+      "name": "web-react-vite",
+      "prompt": "帮我新建一个 React 项目,叫 portfolio-site,我想做个展示作品的 dashboard 页面",
+      "expected_output": "A Vite+React+TS project named portfolio-site, using bun, with biome.json extending @illustrix/shared-configs/biome, ESLint removed, strict tsconfig, git initialized.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "ts-library",
+      "prompt": "I want to create a TypeScript npm package called tiny-result that exports a Result type",
+      "expected_output": "A publishable TS library named tiny-result, bun-based, with exports/types fields, dist build via bun build + tsc, biome extending shared config, strict tsconfig, git initialized.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "node-cli",
+      "prompt": "搭个命令行工具 mds,功能是把 markdown 转成 html",
+      "expected_output": "A bun-based CLI named mds with a bin field, shebang, src/index.ts entry, biome extending shared config, strict tsconfig, git initialized.",
+      "files": []
+    }
+  ]
+}
