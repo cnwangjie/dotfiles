@@ -15,6 +15,15 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Plugin configs
 VSCODE=code
 
+# homebrew
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+if [ "$(arch)" = "arm64" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 plugins=(
   rbenv
   argocd
@@ -72,15 +81,6 @@ alias bb="bun --bun"
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias luamake="/Users/wangjie/Workspace/wangjie/luamake/luamake"
 
-# homebrew
-export HOMEBREW_NO_AUTO_UPDATE=1
-
-if [ "$(arch)" = "arm64" ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-    eval "$(/usr/local/bin/brew shellenv)"
-fi
-
 # GNU utils
 export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
@@ -102,7 +102,6 @@ export ANDROID_AVD_HOME="$HOME/.android/avd"
 export PATH=/usr/local/bin:$PATH
 export PATH="/opt/homebrew/bin:$PATH"
 
-eval "$(mise activate zsh)"
 eval "$(pay-respects zsh --alias)"
 
 

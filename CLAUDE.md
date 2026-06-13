@@ -4,61 +4,113 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-The chezmoi **source state** for `cnwangjie/dotfiles`. There is no build system, no tests, no linter — every file is a config that gets rendered into `$HOME` by `chezmoi apply`. The repo lives at the canonical chezmoi source location (`~/.local/share/chezmoi`), so editing files here directly is fine.
+The dotfiles + machine-setup repo for `cnwangjie`, driven by **mise bootstrap**
+(https://mise.jdx.dev/bootstrap.html). It was migrated off chezmoi — there is no
+build system, tests, or linter; every file is either a config symlinked into
+`$HOME` or an input to `mise bootstrap`. The repo lives at `~/.local/share/chezmoi`
+(historical path; the directory name no longer implies chezmoi).
 
-Currently tracked (all plain files — no templates, no encrypted files, no `run_*` scripts, no `.chezmoiignore`):
+**The repo mirrors `$HOME` 1:1** — every dotfile sits at the repo root under the
+same path it has under `$HOME` (`.zshrc`, `.config/…`, `.claude/…`). Only
+`README.md`, `CLAUDE.md`, `tasks/`, `.git/`, and the untracked
+`.claude/settings.local.json` (this repo's own Claude project config) are
+repo-meta rather than dotfiles.
 
-| Source path                       | Renders to                          |
-|-----------------------------------|-------------------------------------|
-| `dot_zshrc`                       | `~/.zshrc`                          |
-| `dot_p10k.zsh`                    | `~/.p10k.zsh`                       |
-| `dot_hammerspoon/init.lua`        | `~/.hammerspoon/init.lua`           |
-| `dot_config/ghostty/config`       | `~/.config/ghostty/config`          |
-| `dot_config/helix/config.toml`    | `~/.config/helix/config.toml`       |
-| `dot_config/zellij/config.kdl`    | `~/.config/zellij/config.kdl`       |
+A stable **`~/.dotfiles`** symlink points at this repo (`~/.local/share/chezmoi`),
+and every `[dotfiles]`/task source path resolves through `~/.dotfiles` (the
+official self-managing pattern). New-machine bootstrap is in [README.md](README.md).
 
-## The mental model that prevents most mistakes
+The single source of truth is **`.config/mise/config.toml`**, which is itself
+symlinked to `~/.config/mise/config.toml` (self-managing). It declares:
+
+| Section                | Purpose                                                              |
+|------------------------|----------------------------------------------------------------------|
+| `[settings]`           | `experimental = true`, `dotfiles.root = ~/.dotfiles`                 |
+| `[dotfiles]`           | symlink each repo file → its `$HOME` location (see table below)      |
+| `[tools]`              | versioned dev tools (mise `cargo:`/`go:`/`pipx:` backends + runtimes)|
+| `[bootstrap.packages]` | Homebrew formulae/casks (`brew:`/`brew-cask:`), poured by mise       |
+| `[bootstrap.user]`     | `login_shell`                                                        |
+| `[tasks.bootstrap]`    | renders MCP servers from gopass, merges into `~/.claude.json`        |
+
+### Dotfiles (symlinks, not copies)
+
+One entry symlinks `~/.dotfiles` → `~/.local/share/chezmoi` (the real repo); every
+other entry symlinks `~/<path>` → `~/.dotfiles/<path>` (same relative path on both
+sides). Mapped: `.config/mise/config.toml`,
+`.zshrc`, `.p10k.zsh`, `.hammerspoon/init.lua`,
+`.config/{ghostty,helix,zellij,zed}/…`, `.claude/settings.json`,
+`.claude/hooks/cmux-notify.sh`, and `.claude/skills/{chezmoi-daily,new-project-scaffold}`.
+`~/.claude` runtime state (cache, projects, sessions, …) is deliberately NOT mapped.
+
+`.claude/mcp-servers.json` is a **secret-free skeleton**, not a symlink — the
+`bootstrap` task fills the Gemini key from gopass at apply time (see below).
+
+## The mental model
 
 ```
-SOURCE (here, ~/.local/share/chezmoi)
-   ↓  chezmoi apply
-TARGET (computed in memory)
-   ↓  written to disk if different
-DESTINATION (~ on this machine)
+REPO (~/.local/share/chezmoi)  ←─ ~/.dotfiles symlink ─  mirrors $HOME 1:1
+   │   .config/mise/config.toml  [dotfiles]
+   ↓   mise dotfiles apply  →  creates symlinks (sourced via ~/.dotfiles/…)
+$HOME  (~/.zshrc etc. are symlinks back into the repo — editing either edits both)
 ```
 
-When something "didn't update", figure out which transition is missing — usually the user edited destination (`~/.zshrc`) when they should have edited source, or edited source but forgot to `apply`.
+Because dotfiles are **symlinks**, editing `.zshrc` here *is* editing `~/.zshrc`;
+there is no separate "apply" needed for content changes. `mise bootstrap` is only
+needed to (re)create missing symlinks, install packages/tools, or re-run the task.
 
 ## Commands
 
 ```bash
-chezmoi diff                # what apply would change — run before apply on a fresh machine
-chezmoi apply -v            # render source → write to $HOME (-v is required to see anything)
-chezmoi -n -v apply         # dry-run
+mise bootstrap --dry-run        # preview everything bootstrap would do
+mise bootstrap --yes            # converge: packages → dotfiles → user → tools → task
+mise bootstrap                  # same, with confirmation prompts
 
-chezmoi edit ~/.zshrc       # opens the source file (dot_zshrc), not the destination
-chezmoi re-add ~/.zshrc     # destination drifted ahead → push it back into source
-chezmoi merge ~/.zshrc      # 3-way merge if both sides changed
-
-chezmoi add ~/.foo          # ingest a new dotfile (use --encrypt for secrets, --template for per-machine)
-chezmoi managed             # list everything chezmoi controls
-chezmoi cd                  # cd into source dir (this dir)
-
-chezmoi update -v           # = git pull --rebase --autostash + apply (use on other machines)
-chezmoi doctor              # run first when anything looks broken
+mise dotfiles status            # which symlinks are missing/out of date
+mise dotfiles apply             # (re)create just the symlinks
+mise dotfiles add ~/.foo        # ingest a new dotfile into dotfiles.root + [dotfiles]
+mise bootstrap packages status  # which brew packages are missing
+mise bootstrap packages use brew:foo   # add a package and install it
+mise install                    # install missing [tools]
+mise run bootstrap              # re-run just the MCP-merge task
+mise doctor                     # diagnose mise problems
 ```
+
+On another machine: `git pull` here, then `mise bootstrap --yes`.
 
 ## When editing here
 
-- Files in this repo are the **source state**, not the destination. Editing `dot_zshrc` does nothing until `chezmoi apply` runs.
-- After any change, run `chezmoi diff` to confirm what will be written, then `chezmoi apply -v`.
-- The `dot_` prefix on filenames maps to `.` in the destination — don't rename `dot_zshrc` to `.zshrc`.
-- Filename attribute order is fixed: `[encrypted_][private_][readonly_][empty_][executable_][dot_]<name>[.tmpl]`. Don't reorder.
+- Dotfile **content**: edit the file at its mirrored repo path (e.g. `.zshrc`,
+  `.claude/settings.json`) directly — it's symlinked, so the change is already
+  live. No apply step.
+- **Adding/removing a managed file**: add a `[dotfiles]` entry in
+  `.config/mise/config.toml`, then `mise dotfiles apply`.
+- **Packages/tools**: edit `[bootstrap.packages]` / `[tools]`, then
+  `mise bootstrap --yes` (or `mise install` for tools only).
+- `~/.config/mise/config.toml` is a symlink to `.config/mise/config.toml`
+  — edit the repo copy, never break the symlink.
 
-## Before bulk-adding new directories
+## Secrets
 
-Especially anywhere under `~/.config`, `~/.claude`, `~/.cache`, or `~/Library`: write `.chezmoiignore` at the source root **first** to exclude caches/state/secrets. `.chezmoiignore` patterns are target-path-shaped (e.g. `.claude/cache`, not `dot_claude/cache_`) and apply to both `add` and `apply`. Once committed, scrubbing means rewriting git history.
+No secrets live in this repo. The only secret — the Gemini API key for the
+`mcp-image` MCP server — is pulled from **gopass** (`mcp/gemini-api-key`) by
+`tasks/merge-claude-mcp.sh` (the `[tasks.bootstrap]` task), which renders
+`~/.claude/mcp-servers.json` and merges `.mcpServers` into `~/.claude.json`.
+The committed `.claude/mcp-servers.json` has empty placeholder values.
+
+## Caveats (mise bootstrap is experimental, needs mise >= 2026.6.6)
+
+- mise's `brew:` manager pours bottles into `/opt/homebrew` **without** Homebrew
+  and coexists with a real brew. It does **not** support `brew services`, so the
+  old `restart_service` on `cloudflared`/`smartdns` is dropped — start those
+  manually. `brew-cask:` only supports app-bundle casks (dmg/zip/tar); a
+  pkg-only cask will fail with a clear error.
+- bun globals and vscode extensions are **no longer managed here** (no native
+  mise backend). Install them by hand if needed.
+- The `chezmoi-daily` skill under `.claude/skills/` documents the old chezmoi
+  workflow and is now historical.
 
 ## Commit style
 
-Use semantic / Conventional Commit subjects (`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, …). Do **not** use dated `YYYY.M.D backup` subjects — older history has them, but new commits should be semantic even when the change is just a backup of drift. Don't push without being asked.
+Use semantic / Conventional Commit subjects (`feat:`, `fix:`, `chore:`, `docs:`,
+`refactor:`, …). Do **not** use dated `YYYY.M.D backup` subjects. Don't push
+without being asked.

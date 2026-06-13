@@ -18,8 +18,8 @@
         "mcp-image"
       ],
       "env": {
-        "GEMINI_API_KEY": {{ gopass "mcp/gemini-api-key" | quote }},
-        "IMAGE_OUTPUT_DIR": {{ printf "%s/Workspace/mcp-image" .chezmoi.homeDir | quote }}
+        "GEMINI_API_KEY": "",
+        "IMAGE_OUTPUT_DIR": ""
       }
     },
     "buffer": {

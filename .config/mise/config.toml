@@ -1,0 +1,235 @@
+# mise global config — the single source of truth for this machine.
+#
+# This file lives in the dotfiles repo (~/.local/share/chezmoi) and is itself
+# managed as a dotfile (see [dotfiles] below): ~/.config/mise/config.toml is a
+# symlink back to here. Edit here, then `mise bootstrap` (or `mise dotfiles
+# apply`) to converge.
+#
+# Replaces the former chezmoi setup. `mise bootstrap` runs, in order:
+#   packages -> dotfiles -> macos-defaults -> launchd -> user -> tools -> task
+# See https://mise.jdx.dev/bootstrap.html
+
+[settings]
+experimental = true            # bootstrap/dotfiles are experimental (mise >= 2026.6.6)
+dotfiles.root = "~/.dotfiles"
+
+# ---------------------------------------------------------------------------
+# Dotfiles — symlink each managed file from the repo into $HOME.
+# Whole-file/whole-dir symlinks; edit the repo file and the change is live.
+# Only the files that were tracked before are mapped — ~/.claude runtime state
+# (cache, projects, sessions, …) is deliberately NOT symlinked.
+# ---------------------------------------------------------------------------
+[dotfiles]
+# ~/.dotfiles is a stable symlink to the real repo (here, ~/.local/share/chezmoi).
+# Every other entry sources through ~/.dotfiles, and the repo mirrors $HOME 1:1,
+# so each source path is just ~/.dotfiles/<same path the file has under $HOME>.
+"~/.dotfiles"                 = "~/.local/share/chezmoi"
+
+# self-managing: this very config
+"~/.config/mise/config.toml"  = "~/.dotfiles/.config/mise/config.toml"
+
+"~/.zshrc"                    = "~/.dotfiles/.zshrc"
+"~/.p10k.zsh"                 = "~/.dotfiles/.p10k.zsh"
+"~/.hammerspoon/init.lua"     = "~/.dotfiles/.hammerspoon/init.lua"
+"~/.config/ghostty/config"    = "~/.dotfiles/.config/ghostty/config"
+"~/.config/helix/config.toml" = "~/.dotfiles/.config/helix/config.toml"
+"~/.config/zellij/config.kdl" = "~/.dotfiles/.config/zellij/config.kdl"
+"~/.config/zed/settings.json" = "~/.dotfiles/.config/zed/settings.json"
+
+"~/.claude/settings.json"               = "~/.dotfiles/.claude/settings.json"
+"~/.claude/hooks/cmux-notify.sh"        = "~/.dotfiles/.claude/hooks/cmux-notify.sh"
+"~/.claude/skills/chezmoi-daily"        = "~/.dotfiles/.claude/skills/chezmoi-daily"
+"~/.claude/skills/new-project-scaffold" = "~/.dotfiles/.claude/skills/new-project-scaffold"
+
+# ---------------------------------------------------------------------------
+# Tools — versioned dev tools mise installs on PATH (replaces the cargo/go/uv
+# loops from the old install-packages script).
+#   bun globals and vscode extensions were intentionally dropped in this
+#   migration (no native mise backend; install them manually if needed).
+# ---------------------------------------------------------------------------
+[tools]
+# previously in ~/.config/mise/config.toml
+java   = "openjdk-17"
+python = "latest"
+node   = "22.16.0"
+aube   = "latest"
+go     = "latest"
+herdr  = "latest"
+
+# former cargo_crates (dropped: cargo-binstall/cargo-update — mise handles
+# binstall internally; mise — self-managed; jj-cli — installed via brew)
+"cargo:ast-grep" = "latest"
+"cargo:bob-nvim" = "latest"
+"cargo:slumber"  = "latest"
+"cargo:zellij"   = "latest"
+
+# former go_modules
+"go:github.com/air-verse/air"                           = "latest"
+"go:github.com/databendcloud/bend-ingest-kafka"         = "latest"
+"go:github.com/Dreamacro/clash"                         = "latest"
+"go:github.com/go-delve/delve/cmd/dlv"                  = "latest"
+"go:github.com/gofiber/cli/fiber"                       = "latest"
+"go:github.com/ramya-rao-a/go-outline"                  = "latest"
+"go:golang.org/x/tools/cmd/goimports"                   = "latest"
+"go:github.com/fatih/gomodifytags"                      = "latest"
+"go:github.com/haya14busa/goplay/cmd/goplay"            = "latest"
+"go:golang.org/x/tools/gopls"                           = "latest"
+"go:github.com/cweill/gotests/gotests"                  = "latest"
+"go:github.com/mitranim/gow"                            = "latest"
+"go:github.com/vadimi/grpc-client-cli/cmd/grpc-client-cli" = "latest"
+"go:github.com/josharian/impl"                          = "latest"
+"go:github.com/charmbracelet/mods"                      = "latest"
+"go:github.com/zu1k/nali"                               = "latest"
+"go:github.com/aushq/gdp/cmd/protoc-gen-gd"             = "latest"
+"go:google.golang.org/protobuf/cmd/protoc-gen-go"       = "latest"
+"go:google.golang.org/grpc/cmd/protoc-gen-go-grpc"      = "latest"
+"go:honnef.co/go/tools/cmd/staticcheck"                 = "latest"
+"go:github.com/pranshuparmar/witr/cmd/witr"             = "latest"
+
+# former uv_tools
+"pipx:pdm" = "latest"
+
+# ---------------------------------------------------------------------------
+# OS packages — Homebrew formulae/casks, poured by mise directly into
+# /opt/homebrew (no `brew` binary required). Third-party taps are inferred
+# from the owner/tap GitHub URL; add [bootstrap.brew.taps] entries if any fail.
+#
+# Only intentionally-installed formulae are listed; mise resolves the full
+# dependency closure automatically. Dropped vs the old Brewfile: `chezmoi`
+# (unused) plus 13 pure-dependency libs that other listed packages pull in
+# transitively (giflib highway libpng openssl@3 libssh2 glib cairo pango
+# librsvg pkgconf gobject-introspection freetds libpq). Kept jpeg/pygobject3/
+# faiss/poppler — nothing depends on them, so they must stay explicit.
+#
+# Service options (cloudflared/smartdns `restart_service`) are not supported
+# by mise's brew manager — start those manually if you rely on them.
+# ---------------------------------------------------------------------------
+[bootstrap.packages]
+"brew:argocd" = "latest"
+"brew:python@3.11" = "latest"
+"brew:autojump" = "latest"
+"brew:automake" = "latest"
+"brew:bat" = "latest"
+"brew:bazel" = "latest"
+"brew:bear" = "latest"
+"brew:node" = "latest"
+"brew:bitwarden-cli" = "latest"
+"brew:btop" = "latest"
+"brew:cloudflared" = "latest"
+"brew:cocoapods" = "latest"
+"brew:coreutils" = "latest"
+"brew:curl" = "latest"
+"brew:deno" = "latest"
+"brew:dive" = "latest"
+"brew:duckdb" = "latest"
+"brew:duf" = "latest"
+"brew:emscripten" = "latest"
+"brew:exiftool" = "latest"
+"brew:faiss" = "latest"
+"brew:fastfetch" = "latest"
+"brew:terminal-notifier" = "latest"
+"brew:fastlane" = "latest"
+"brew:ffmpeg" = "latest"
+"brew:flyctl" = "latest"
+"brew:fzf" = "latest"
+"brew:gh" = "latest"
+"brew:git-filter-repo" = "latest"
+"brew:git-lfs" = "latest"
+"brew:go" = "latest"
+"brew:graphviz" = "latest"
+"brew:helix" = "latest"
+"brew:helm" = "latest"
+"brew:htop" = "latest"
+"brew:ios-deploy" = "latest"
+"brew:iredis" = "latest"
+"brew:jj" = "latest"
+"brew:jpeg" = "latest"
+"brew:jq" = "latest"
+"brew:jupyterlab" = "latest"
+"brew:k6" = "latest"
+"brew:kubernetes-cli" = "latest"
+"brew:lastpass-cli" = "latest"
+"brew:lazygit" = "latest"
+"brew:llvm" = "latest"
+"brew:maven" = "latest"
+"brew:mycli" = "latest"
+"brew:neofetch" = "latest"
+"brew:neovim" = "latest"
+"brew:nvm" = "latest"
+"brew:octave" = "latest"
+"brew:open-ocd" = "latest"
+"brew:opencc" = "latest"
+"brew:opencv" = "latest"
+"brew:openssh" = "latest"
+"brew:p7zip" = "latest"
+"brew:php" = "latest"
+"brew:podman" = "latest"
+"brew:podman-compose" = "latest"
+"brew:poppler" = "latest"
+"brew:pygobject3" = "latest"
+"brew:python@3.10" = "latest"
+"brew:rbenv" = "latest"
+"brew:redis" = "latest"
+"brew:ripgrep" = "latest"
+"brew:scons" = "latest"
+"brew:smartdns" = "latest"
+"brew:speedtest-cli" = "latest"
+"brew:starship" = "latest"
+"brew:tig" = "latest"
+"brew:tldr" = "latest"
+"brew:tmux" = "latest"
+"brew:trash-cli" = "latest"
+"brew:tree" = "latest"
+"brew:unar" = "latest"
+"brew:usage" = "latest"
+"brew:uv" = "latest"
+"brew:virtualenv" = "latest"
+"brew:watchman" = "latest"
+"brew:wget" = "latest"
+"brew:yazi" = "latest"
+"brew:ykman" = "latest"
+"brew:zoxide" = "latest"
+"brew:zsh" = "latest"
+"brew:argoproj/tap/kubectl-argo-rollouts" = "latest"
+"brew:felixkratz/formulae/sketchybar" = "latest"
+"brew:jstkdng/programs/ueberzugpp" = "latest"
+"brew:koekeishiya/formulae/yabai" = "latest"
+"brew:nats-io/nats-tools/nats" = "latest"
+"brew:oven-sh/bun/bun" = "latest"
+"brew:steipete/tap/gifgrep" = "latest"
+"brew:steipete/tap/imsg" = "latest"
+"brew:steipete/tap/remindctl" = "latest"
+"brew:steipete/tap/summarize" = "latest"
+"brew:stripe/stripe-cli/stripe" = "latest"
+"brew:weaveworks/tap/eksctl" = "latest"
+"brew:yakitrak/yakitrak/obsidian-cli" = "latest"
+"brew-cask:steipete/tap/codexbar" = "latest"
+"brew-cask:emacs-app" = "latest"
+"brew-cask:font-hack-nerd-font" = "latest"
+"brew-cask:gcc-arm-embedded" = "latest"
+"brew-cask:gcloud-cli" = "latest"
+"brew-cask:hammerspoon" = "latest"
+"brew-cask:hyper" = "latest"
+"brew-cask:jordanbaird-ice" = "latest"
+"brew-cask:keycastr" = "latest"
+"brew-cask:lyricsx" = "latest"
+"brew-cask:orbstack" = "latest"
+"brew-cask:rar" = "latest"
+"brew-cask:wezterm" = "latest"
+"brew-cask:xscreensaver" = "latest"
+
+# ---------------------------------------------------------------------------
+# Current-user settings. login_shell is applied by `mise bootstrap user`; the
+# brewed zsh must be registered in /etc/shells (mise/chsh may prompt for sudo).
+# ---------------------------------------------------------------------------
+[bootstrap.user]
+login_shell = "/opt/homebrew/bin/zsh"
+
+# ---------------------------------------------------------------------------
+# Final imperative step: render the MCP-servers intent (Gemini key pulled from
+# gopass at apply time, never stored in this repo) and merge it into
+# ~/.claude.json. Replaces the old run_onchange merge-claude-mcp script.
+# ---------------------------------------------------------------------------
+[tasks.bootstrap]
+description = "Render MCP servers from gopass and merge into ~/.claude.json"
+run = "bash ~/.dotfiles/tasks/merge-claude-mcp.sh"
