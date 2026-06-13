@@ -26,17 +26,22 @@ the repo's real absolute path — so `mise dotfiles apply` keeps it correct and
 update it (and re-`apply`) or just repoint the symlink. New-machine bootstrap is in
 [README.md](README.md).
 
-The single source of truth is **`.config/mise/config.toml`**, which is itself
-symlinked to `~/.config/mise/config.toml` (self-managing). It declares:
+The mise config is **split** across `.config/mise/config.toml` (the critical core)
+and `.config/mise/conf.d/*.toml` (the bulk), all of which mise merges into one
+logical global config (it auto-loads `~/.config/mise/conf.d/*.toml`). It's
+self-managing — `config.toml` symlinks itself **and** the whole `conf.d/`
+directory (one `[dotfiles]` entry, since that dir is wholly ours) into
+`~/.config/mise/`, so the conf.d symlink must be applied before mise can read
+`[tools]`/`[bootstrap.packages]`/`[tasks]`.
 
-| Section                | Purpose                                                              |
-|------------------------|----------------------------------------------------------------------|
-| `[settings]`           | `experimental = true`, `dotfiles.root = ~/.dotfiles`                 |
-| `[dotfiles]`           | symlink each repo file → its `$HOME` location (see table below)      |
-| `[tools]`              | versioned dev tools (mise `cargo:`/`go:`/`pipx:` backends + runtimes)|
-| `[bootstrap.packages]` | Homebrew formulae/casks (`brew:`/`brew-cask:`), poured by mise       |
-| `[bootstrap.user]`     | `login_shell`                                                        |
-| `[tasks.bootstrap]`    | renders MCP servers from gopass, merges into `~/.claude.json`        |
+| File                   | Section(s)             | Purpose                                                  |
+|------------------------|------------------------|----------------------------------------------------------|
+| `config.toml`          | `[settings]`           | `experimental = true`, `dotfiles.root = ~/.dotfiles`     |
+| `config.toml`          | `[dotfiles]`           | symlink each repo file → its `$HOME` location (incl. conf.d) |
+| `config.toml`          | `[tools]`              | language runtimes (java/python/node/go/…) — the dev baseline |
+| `conf.d/tools.toml`    | `[tools]`              | bulky backend tools (`cargo:`/`go:`/`pipx:`); merges with the above |
+| `conf.d/packages.toml` | `[bootstrap.packages]`, `[bootstrap.user]` | Homebrew formulae/casks + `login_shell` |
+| `conf.d/tasks.toml`    | `[tasks.bootstrap]`    | renders MCP servers from gopass, merges into `~/.claude.json` |
 
 ### Dotfiles (symlinks, not copies)
 
@@ -92,10 +97,12 @@ On another machine: `git pull` here, then `mise bootstrap --yes`.
   live. No apply step.
 - **Adding/removing a managed file**: add a `[dotfiles]` entry in
   `.config/mise/config.toml`, then `mise dotfiles apply`.
-- **Packages/tools**: edit `[bootstrap.packages]` / `[tools]`, then
+- **Packages/tools**: edit `conf.d/packages.toml` / `conf.d/tools.toml`, then
   `mise bootstrap --yes` (or `mise install` for tools only).
-- `~/.config/mise/config.toml` is a symlink to `.config/mise/config.toml`
-  — edit the repo copy, never break the symlink.
+- **`[settings]`/`[dotfiles]`**: edit `config.toml` (the core); the conf.d files
+  only hold `[tools]`/`[bootstrap.*]`/`[tasks]`.
+- `~/.config/mise/config.toml` and the `~/.config/mise/conf.d` dir are symlinks to
+  the repo copies — edit the repo copy, never break the symlinks.
 
 ## Secrets
 

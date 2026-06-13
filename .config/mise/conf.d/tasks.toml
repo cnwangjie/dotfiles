@@ -1,0 +1,11 @@
+# conf.d/tasks.toml — bootstrap tasks.
+# Merged into the global mise config via ~/.config/mise/conf.d/*.toml (symlinked
+# from the repo by the [dotfiles] entry in ../config.toml).
+#
+# Final imperative bootstrap step: render the MCP-servers intent (Gemini key
+# pulled from gopass at apply time, never stored in this repo) and merge it into
+# ~/.claude.json. Replaces the old run_onchange merge-claude-mcp script.
+# Run on its own with `mise run bootstrap`.
+[tasks.bootstrap]
+description = "Render MCP servers from gopass and merge into ~/.claude.json"
+run = "bash ~/.dotfiles/tasks/merge-claude-mcp.sh"

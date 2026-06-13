@@ -4,10 +4,12 @@ Personal dotfiles + machine setup for `cnwangjie`, driven by
 [**mise bootstrap**](https://mise.jdx.dev/bootstrap.html) (migrated off chezmoi).
 
 The repo **mirrors `$HOME` 1:1**: every dotfile lives at the repo root under the
-same path it has under `$HOME` (`.zshrc`, `.config/…`, `.claude/…`). The single
-source of truth is [`.config/mise/config.toml`](.config/mise/config.toml), which
-declares dotfile symlinks, tools, Homebrew packages, login shell, and a final
-bootstrap task. See [CLAUDE.md](CLAUDE.md) for the working model and caveats.
+same path it has under `$HOME` (`.zshrc`, `.config/…`, `.claude/…`). The source of
+truth is the mise config under `.config/mise/`: the critical core —
+[`config.toml`](.config/mise/config.toml) (`[settings]` + the dotfile symlink map)
+— plus [`conf.d/*.toml`](.config/mise/conf.d) that mise merges automatically
+(`tools.toml`, `packages.toml`, `tasks.toml`). See [CLAUDE.md](CLAUDE.md) for the
+working model and caveats.
 
 The repo can live **anywhere** — pick a location and export it as `$DOTFILES`
 (used throughout this guide). It is exposed through a stable **`~/.dotfiles`**
@@ -59,16 +61,21 @@ dotfiles.root = "~/.dotfiles"
 
 ```sh
 mise trust ~/.config/mise/config.toml
-mise dotfiles apply        # replaces this file with a symlink to the repo's
-                           # full .config/mise/config.toml (via ~/.dotfiles)
+mise dotfiles apply        # seed → symlink config.toml into the repo (via ~/.dotfiles)
 mise trust "$DOTFILES"     # the live config now resolves into the repo — trust
                            # it too, or [settings]/[dotfiles] are silently ignored
+mise dotfiles apply        # run AGAIN: the full config.toml is active now, so this
+                           # symlinks the conf.d/ dir (+ remaining dotfiles). Needed
+                           # before bootstrap, which loads config once at start and
+                           # runs packages before its own dotfiles phase — so
+                           # [tools]/[bootstrap.packages]/[tasks] must already be linked.
 mise bootstrap --dry-run   # review: packages, tools, remaining dotfiles, login shell, task
 mise bootstrap --yes       # converge everything
 ```
 
-After step 4, `~/.config/mise/config.toml` is a symlink into the repo, so the full
-config (all packages/tools/dotfiles) is live and the seed lines are no longer needed.
+After step 4, `~/.config/mise/config.toml` and the `conf.d/` dir are symlinks into the
+repo, so the full config (all packages/tools/dotfiles) is live and the seed lines are
+no longer needed.
 
 ## Day-to-day
 
@@ -79,7 +86,7 @@ $EDITOR ~/.zshrc
 # add a new managed dotfile: add a [dotfiles] entry, then
 mise dotfiles apply
 
-# add a package / tool: edit [bootstrap.packages] / [tools], then
+# add a package / tool: edit conf.d/packages.toml / conf.d/tools.toml, then
 mise bootstrap --yes        # or `mise install` for tools only
 
 # sync another machine

@@ -1,0 +1,40 @@
+# conf.d/tools.toml — the bulky cargo:/go:/pipx: backend tools mise puts on PATH.
+# Merged into the global mise config via ~/.config/mise/conf.d/*.toml (the conf.d/
+# dir is symlinked from the repo by the [dotfiles] entry in ../config.toml). mise
+# merges [tools] across files, so language runtimes live in ../config.toml (the
+# core) and only these backend tools live here. Edit here; run `mise install`.
+#
+# Replaces the cargo/go/uv loops from the old install-packages script. bun
+# globals and vscode extensions were intentionally dropped in the migration
+# (no native mise backend; install them manually if needed).
+[tools]
+# former cargo_crates (dropped: cargo-binstall/cargo-update — mise handles
+# binstall internally; mise — self-managed; jj-cli — installed via brew)
+"cargo:ast-grep" = "latest"
+"cargo:bob-nvim" = "latest"
+"cargo:slumber"  = "latest"
+"cargo:zellij"   = "latest"
+
+# former go_modules
+"go:github.com/air-verse/air"                           = "latest"
+"go:github.com/databendcloud/bend-ingest-kafka"         = "latest"
+"go:github.com/go-delve/delve/cmd/dlv"                  = "latest"
+"go:github.com/gofiber/cli/fiber"                       = "latest"
+"go:github.com/ramya-rao-a/go-outline"                  = "latest"
+"go:golang.org/x/tools/cmd/goimports"                   = "latest"
+"go:github.com/fatih/gomodifytags"                      = "latest"
+"go:github.com/haya14busa/goplay/cmd/goplay"            = "latest"
+"go:golang.org/x/tools/gopls"                           = "latest"
+"go:github.com/cweill/gotests/gotests"                  = "latest"
+"go:github.com/mitranim/gow"                            = "latest"
+"go:github.com/vadimi/grpc-client-cli/cmd/grpc-client-cli" = "latest"
+"go:github.com/josharian/impl"                          = "latest"
+"go:github.com/charmbracelet/mods"                      = "latest"
+"go:github.com/zu1k/nali"                               = "latest"
+"go:google.golang.org/protobuf/cmd/protoc-gen-go"       = "latest"
+"go:google.golang.org/grpc/cmd/protoc-gen-go-grpc"      = "latest"
+"go:honnef.co/go/tools/cmd/staticcheck"                 = "latest"
+"go:github.com/pranshuparmar/witr/cmd/witr"             = "latest"
+
+# former uv_tools
+"pipx:pdm" = "latest"
