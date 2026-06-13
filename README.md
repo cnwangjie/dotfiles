@@ -9,8 +9,10 @@ source of truth is [`.config/mise/config.toml`](.config/mise/config.toml), which
 declares dotfile symlinks, tools, Homebrew packages, login shell, and a final
 bootstrap task. See [CLAUDE.md](CLAUDE.md) for the working model and caveats.
 
-The repo is checked out at `~/.local/share/chezmoi` (historical path) and exposed
-through a stable **`~/.dotfiles`** symlink that every config path resolves through.
+The repo can live **anywhere** — pick a location and export it as `$DOTFILES`
+(used throughout this guide). It is exposed through a stable **`~/.dotfiles`**
+symlink, and every config path resolves through `~/.dotfiles`, so the repo can be
+moved later just by repointing that one symlink.
 
 ## Bootstrap a fresh machine
 
@@ -20,11 +22,16 @@ through a stable **`~/.dotfiles`** symlink that every config path resolves throu
 curl https://mise.run | sh        # or: brew install mise / cargo binstall mise
 ```
 
-### 2. Clone this repo
+### 2. Clone this repo and link `~/.dotfiles`
 
 ```sh
-git clone <repo-url> ~/.local/share/chezmoi
+export DOTFILES="$HOME/.dotfiles-repo"   # anywhere you like
+git clone <repo-url> "$DOTFILES"
+ln -s "$DOTFILES" ~/.dotfiles            # the stable symlink everything resolves through
 ```
+
+To **move** the repo later: `mv "$DOTFILES" "$NEW" && ln -sfn "$NEW" ~/.dotfiles`.
+Nothing else changes — no path is hardcoded in the repo.
 
 ### 3. Seed the global mise config
 
@@ -39,7 +46,6 @@ experimental = true
 dotfiles.root = "~/.dotfiles"
 
 [dotfiles]
-"~/.dotfiles"                = "~/.local/share/chezmoi"          # stable symlink to the real repo
 "~/.config/mise/config.toml" = "~/.dotfiles/.config/mise/config.toml"  # pull in the full config
 ```
 
@@ -47,8 +53,8 @@ dotfiles.root = "~/.dotfiles"
 
 ```sh
 mise trust ~/.config/mise/config.toml
-mise dotfiles apply        # creates ~/.dotfiles and replaces this file with a
-                           # symlink to the repo's full .config/mise/config.toml
+mise dotfiles apply        # replaces this file with a symlink to the repo's
+                           # full .config/mise/config.toml (via ~/.dotfiles)
 mise bootstrap --dry-run   # review: packages, tools, remaining dotfiles, login shell, task
 mise bootstrap --yes       # converge everything
 ```

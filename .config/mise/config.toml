@@ -1,8 +1,8 @@
 # mise global config — the single source of truth for this machine.
 #
-# This file lives in the dotfiles repo (~/.local/share/chezmoi) and is itself
-# managed as a dotfile (see [dotfiles] below): ~/.config/mise/config.toml is a
-# symlink back to here. Edit here, then `mise bootstrap` (or `mise dotfiles
+# This file lives in the dotfiles repo (reached via the ~/.dotfiles symlink) and
+# is itself managed as a dotfile (see [dotfiles] below): ~/.config/mise/config.toml
+# is a symlink back to here. Edit here, then `mise bootstrap` (or `mise dotfiles
 # apply`) to converge.
 #
 # Replaces the former chezmoi setup. `mise bootstrap` runs, in order:
@@ -20,11 +20,10 @@ dotfiles.root = "~/.dotfiles"
 # (cache, projects, sessions, …) is deliberately NOT symlinked.
 # ---------------------------------------------------------------------------
 [dotfiles]
-# ~/.dotfiles is a stable symlink to the real repo (here, ~/.local/share/chezmoi).
-# Every other entry sources through ~/.dotfiles, and the repo mirrors $HOME 1:1,
-# so each source path is just ~/.dotfiles/<same path the file has under $HOME>.
-"~/.dotfiles"                 = "~/.local/share/chezmoi"
-
+# ~/.dotfiles is a stable symlink to wherever this repo is checked out; you
+# create it once during bootstrap (see README), so the repo can live anywhere
+# and no path is hardcoded here. Every entry sources through ~/.dotfiles, and the
+# repo mirrors $HOME 1:1 — each source is ~/.dotfiles/<same path under $HOME>.
 # self-managing: this very config
 "~/.config/mise/config.toml"  = "~/.dotfiles/.config/mise/config.toml"
 

@@ -7,8 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 The dotfiles + machine-setup repo for `cnwangjie`, driven by **mise bootstrap**
 (https://mise.jdx.dev/bootstrap.html). It was migrated off chezmoi — there is no
 build system, tests, or linter; every file is either a config symlinked into
-`$HOME` or an input to `mise bootstrap`. The repo lives at `~/.local/share/chezmoi`
-(historical path; the directory name no longer implies chezmoi).
+`$HOME` or an input to `mise bootstrap`. The repo can live anywhere; it's reached
+through the stable `~/.dotfiles` symlink, so no path is hardcoded.
 
 **The repo mirrors `$HOME` 1:1** — every dotfile sits at the repo root under the
 same path it has under `$HOME` (`.zshrc`, `.config/…`, `.claude/…`). Only
@@ -16,9 +16,10 @@ same path it has under `$HOME` (`.zshrc`, `.config/…`, `.claude/…`). Only
 `.claude/settings.local.json` (this repo's own Claude project config) are
 repo-meta rather than dotfiles.
 
-A stable **`~/.dotfiles`** symlink points at this repo (`~/.local/share/chezmoi`),
-and every `[dotfiles]`/task source path resolves through `~/.dotfiles` (the
-official self-managing pattern). New-machine bootstrap is in [README.md](README.md).
+A stable **`~/.dotfiles`** symlink points at this repo (wherever it's checked out;
+created manually during bootstrap), and every `[dotfiles]`/task source path
+resolves through `~/.dotfiles` — so the repo is freely movable by repointing that
+one symlink. New-machine bootstrap is in [README.md](README.md).
 
 The single source of truth is **`.config/mise/config.toml`**, which is itself
 symlinked to `~/.config/mise/config.toml` (self-managing). It declares:
@@ -34,21 +35,21 @@ symlinked to `~/.config/mise/config.toml` (self-managing). It declares:
 
 ### Dotfiles (symlinks, not copies)
 
-One entry symlinks `~/.dotfiles` → `~/.local/share/chezmoi` (the real repo); every
-other entry symlinks `~/<path>` → `~/.dotfiles/<path>` (same relative path on both
-sides). Mapped: `.config/mise/config.toml`,
-`.zshrc`, `.p10k.zsh`, `.hammerspoon/init.lua`,
-`.config/{ghostty,helix,zellij,zed}/…`, `.claude/settings.json`,
-`.claude/hooks/cmux-notify.sh`, and `.claude/skills/{chezmoi-daily,new-project-scaffold}`.
-`~/.claude` runtime state (cache, projects, sessions, …) is deliberately NOT mapped.
+`~/.dotfiles` is a manual symlink to the repo checkout; every `[dotfiles]` entry
+symlinks `~/<path>` → `~/.dotfiles/<path>` (same relative path on both sides).
+Mapped: `.config/mise/config.toml`, `.zshrc`, `.p10k.zsh`, `.hammerspoon/init.lua`,
+and `.config/{ghostty,helix,zellij,zed}/…`.
 
-`.claude/mcp-servers.json` is a **secret-free skeleton**, not a symlink — the
-`bootstrap` task fills the Gemini key from gopass at apply time (see below).
+The `.claude/*` files (`settings.json`, `hooks/`, `skills/`) are **tracked in git
+but intentionally NOT mise-synced** — manage/symlink them by hand. The exception is
+`.claude/mcp-servers.json`, a **secret-free skeleton** (not a symlink) that the
+`bootstrap` task fills with the Gemini key from gopass at apply time (see below).
+`~/.claude` runtime state (cache, projects, sessions, …) is never touched.
 
 ## The mental model
 
 ```
-REPO (~/.local/share/chezmoi)  ←─ ~/.dotfiles symlink ─  mirrors $HOME 1:1
+REPO (anywhere)  ←─ ~/.dotfiles symlink ─  mirrors $HOME 1:1
    │   .config/mise/config.toml  [dotfiles]
    ↓   mise dotfiles apply  →  creates symlinks (sourced via ~/.dotfiles/…)
 $HOME  (~/.zshrc etc. are symlinks back into the repo — editing either edits both)
