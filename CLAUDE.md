@@ -8,7 +8,8 @@ The dotfiles + machine-setup repo for `cnwangjie`, driven by **mise bootstrap**
 (https://mise.jdx.dev/bootstrap.html). It was migrated off chezmoi — there is no
 build system, tests, or linter; every file is either a config symlinked into
 `$HOME` or an input to `mise bootstrap`. The repo can live anywhere; it's reached
-through the stable `~/.dotfiles` symlink, so no path is hardcoded.
+through the stable `~/.dotfiles` symlink, so the checkout location is pinned in
+exactly one line (the self-managing `~/.dotfiles` entry in `[dotfiles]`).
 
 **The repo mirrors `$HOME` 1:1** — every dotfile sits at the repo root under the
 same path it has under `$HOME` (`.zshrc`, `.config/…`, `.claude/…`). Only
@@ -16,10 +17,14 @@ same path it has under `$HOME` (`.zshrc`, `.config/…`, `.claude/…`). Only
 `.claude/settings.local.json` (this repo's own Claude project config) are
 repo-meta rather than dotfiles.
 
-A stable **`~/.dotfiles`** symlink points at this repo (wherever it's checked out;
-created manually during bootstrap), and every `[dotfiles]`/task source path
-resolves through `~/.dotfiles` — so the repo is freely movable by repointing that
-one symlink. New-machine bootstrap is in [README.md](README.md).
+A stable **`~/.dotfiles`** symlink points at this repo (wherever it's checked out),
+and every `[dotfiles]`/task source path resolves through `~/.dotfiles`. The symlink
+is created manually during bootstrap (mise can't read this config until the link
+exists), but `[dotfiles]` also **self-manages** it via a first entry whose source is
+the repo's real absolute path — so `mise dotfiles apply` keeps it correct and
+`status` reports it. That one entry is the only hardcoded path; to move the repo,
+update it (and re-`apply`) or just repoint the symlink. New-machine bootstrap is in
+[README.md](README.md).
 
 The single source of truth is **`.config/mise/config.toml`**, which is itself
 symlinked to `~/.config/mise/config.toml` (self-managing). It declares:
@@ -35,10 +40,12 @@ symlinked to `~/.config/mise/config.toml` (self-managing). It declares:
 
 ### Dotfiles (symlinks, not copies)
 
-`~/.dotfiles` is a manual symlink to the repo checkout; every `[dotfiles]` entry
-symlinks `~/<path>` → `~/.dotfiles/<path>` (same relative path on both sides).
-Mapped: `.config/mise/config.toml`, `.zshrc`, `.p10k.zsh`, `.hammerspoon/init.lua`,
-and `.config/{ghostty,helix,zellij,zed}/…`.
+`~/.dotfiles` symlinks to the repo checkout (bootstrapped by hand, then kept in
+sync by the self-managing `~/.dotfiles` entry whose source is the repo's absolute
+path — relative would resolve against `dotfiles.root` and loop on itself). Every
+other `[dotfiles]` entry symlinks `~/<path>` → `~/.dotfiles/<path>` (same relative
+path on both sides). Mapped: `.config/mise/config.toml`, `.zshrc`, `.p10k.zsh`,
+`.hammerspoon/init.lua`, and `.config/{ghostty,helix,zellij,zed}/…`.
 
 The `.claude/*` files (`settings.json`, `hooks/`, `skills/`) are **tracked in git
 but intentionally NOT mise-synced** — manage/symlink them by hand. The exception is

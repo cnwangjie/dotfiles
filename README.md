@@ -11,8 +11,10 @@ bootstrap task. See [CLAUDE.md](CLAUDE.md) for the working model and caveats.
 
 The repo can live **anywhere** — pick a location and export it as `$DOTFILES`
 (used throughout this guide). It is exposed through a stable **`~/.dotfiles`**
-symlink, and every config path resolves through `~/.dotfiles`, so the repo can be
-moved later just by repointing that one symlink.
+symlink, and every config path resolves through `~/.dotfiles`. The checkout
+location is pinned in exactly one place — the self-managing `~/.dotfiles` entry in
+`[dotfiles]` — so moving the repo means repointing the symlink and updating that
+one line.
 
 ## Bootstrap a fresh machine
 
@@ -30,8 +32,12 @@ git clone <repo-url> "$DOTFILES"
 ln -s "$DOTFILES" ~/.dotfiles            # the stable symlink everything resolves through
 ```
 
-To **move** the repo later: `mv "$DOTFILES" "$NEW" && ln -sfn "$NEW" ~/.dotfiles`.
-Nothing else changes — no path is hardcoded in the repo.
+To **move** the repo later: `mv "$DOTFILES" "$NEW" && ln -sfn "$NEW" ~/.dotfiles`,
+then point the self-managing `"~/.dotfiles"` entry in
+[`.config/mise/config.toml`](.config/mise/config.toml) at `$NEW` and re-run
+`mise dotfiles apply`. That entry is the only hardcoded path in the repo (its
+source must be absolute — a relative one would resolve against `dotfiles.root` and
+loop the link onto itself).
 
 ### 3. Seed the global mise config
 
@@ -55,6 +61,8 @@ dotfiles.root = "~/.dotfiles"
 mise trust ~/.config/mise/config.toml
 mise dotfiles apply        # replaces this file with a symlink to the repo's
                            # full .config/mise/config.toml (via ~/.dotfiles)
+mise trust "$DOTFILES"     # the live config now resolves into the repo — trust
+                           # it too, or [settings]/[dotfiles] are silently ignored
 mise bootstrap --dry-run   # review: packages, tools, remaining dotfiles, login shell, task
 mise bootstrap --yes       # converge everything
 ```

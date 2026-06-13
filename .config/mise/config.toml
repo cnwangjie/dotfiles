@@ -20,10 +20,19 @@ dotfiles.root = "~/.dotfiles"
 # (cache, projects, sessions, …) is deliberately NOT symlinked.
 # ---------------------------------------------------------------------------
 [dotfiles]
-# ~/.dotfiles is a stable symlink to wherever this repo is checked out; you
-# create it once during bootstrap (see README), so the repo can live anywhere
-# and no path is hardcoded here. Every entry sources through ~/.dotfiles, and the
-# repo mirrors $HOME 1:1 — each source is ~/.dotfiles/<same path under $HOME>.
+# ~/.dotfiles is the stable symlink to wherever this repo is checked out; every
+# other entry sources *through* it (~/.dotfiles/<same path under $HOME>), so the
+# repo can live anywhere and no path but the next line is hardcoded.
+#
+# This first entry self-manages that symlink. Its source MUST be the repo's real
+# absolute path — a relative source would resolve against dotfiles.root
+# (= ~/.dotfiles) and point the link at itself (circular). This is the one place
+# the checkout location is pinned; if you move the repo, update this line and
+# re-run `mise dotfiles apply`. (Bootstrap still creates ~/.dotfiles by hand
+# first — mise can't read this config until the link already exists; the entry
+# just keeps it correct and visible in `mise dotfiles status` afterward.)
+"~/.dotfiles"                 = "/Users/wangjie/Workspace/wangjie/dotfiles"
+
 # self-managing: this very config
 "~/.config/mise/config.toml"  = "~/.dotfiles/.config/mise/config.toml"
 
