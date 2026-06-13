@@ -1,6 +1,6 @@
 ---
 name: new-project-scaffold
-description: Scaffold a new project following the user's personal conventions — bun for package management and runtime, TypeScript (latest), Biome for linting (extending @illustrix/shared-configs/biome), strict tsconfig, git initialized, and React+Vite for web frontends. Use this skill whenever the user wants to start, create, bootstrap, scaffold, set up, or initialize a new project, repo, app, package, library, CLI, server, or monorepo — even if they don't name bun, biome, vite, or these tools explicitly. Triggers on phrases like "新建一个项目", "创建一个 React 应用", "做一个 npm 库", "搭个 CLI", "start a new app", "set up a TypeScript library", "bootstrap a monorepo".
+description: Scaffold a new project following the user's personal conventions — bun for package management and runtime, TypeScript (latest), Biome for linting (extending @illustrix/shared-configs/biome), strict tsconfig, git initialized, and React+Vite+Tailwind CSS for web frontends. Use this skill whenever the user wants to start, create, bootstrap, scaffold, set up, or initialize a new project, repo, app, package, library, CLI, server, or monorepo — even if they don't name bun, biome, vite, or these tools explicitly. Triggers on phrases like "新建一个项目", "创建一个 React 应用", "做一个 npm 库", "搭个 CLI", "start a new app", "set up a TypeScript library", "bootstrap a monorepo".
 ---
 
 # New Project Scaffold
@@ -24,7 +24,7 @@ Figure out which of these the user wants. If it's genuinely ambiguous, ask one s
 
 | Type | Use when | Recipe |
 |------|----------|--------|
-| Web frontend (React) | UI, SPA, dashboard, web app | `references/web-react.md` |
+| Web frontend (React) | UI, SPA, dashboard, web app | `references/web-react.md` (Vite + Tailwind) |
 | Node / Bun / CLI | server, API, CLI tool, script | `references/node-cli.md` |
 | TS library (npm package) | publishable package with type exports | `references/ts-library.md` |
 | Monorepo | multiple packages, bun workspaces | `references/monorepo.md` |

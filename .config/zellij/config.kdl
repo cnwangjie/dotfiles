@@ -274,6 +274,14 @@ keybinds clear-defaults=true {
                 floating true
             }
         }
+
+        bind "r" {
+            OverrideLayout {
+                layout "zjs"
+                retain_existing_terminal_panes true
+                retain_existing_plugin_panes true
+            }
+        }
     }
 }
 
@@ -431,7 +439,7 @@ pane_frames false
 // otherwise this will error if such a session exists.
 // Default: <RANDOM>
 //
-session_name "galaxy"
+session_name "default"
 
 // When `session_name` is provided, attaches to that session
 // if it is already running or creates it otherwise.

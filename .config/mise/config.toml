@@ -36,10 +36,9 @@ dotfiles.root = "~/.dotfiles"
 "~/.config/zellij/config.kdl" = "~/.dotfiles/.config/zellij/config.kdl"
 "~/.config/zed/settings.json" = "~/.dotfiles/.config/zed/settings.json"
 
-"~/.claude/settings.json"               = "~/.dotfiles/.claude/settings.json"
-"~/.claude/hooks/cmux-notify.sh"        = "~/.dotfiles/.claude/hooks/cmux-notify.sh"
-"~/.claude/skills/chezmoi-daily"        = "~/.dotfiles/.claude/skills/chezmoi-daily"
-"~/.claude/skills/new-project-scaffold" = "~/.dotfiles/.claude/skills/new-project-scaffold"
+# ~/.claude/* (settings.json, hooks/, skills/) are kept in git but intentionally
+# NOT mise-synced — manage/symlink them by hand. .claude/mcp-servers.json is the
+# exception: it feeds the [tasks.bootstrap] task below.
 
 # ---------------------------------------------------------------------------
 # Tools — versioned dev tools mise installs on PATH (replaces the cargo/go/uv

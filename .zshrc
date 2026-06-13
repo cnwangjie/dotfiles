@@ -1,5 +1,6 @@
+
 # zprof used to show init proformance
-# p10k may require network connection, may cause shell starting stucked
+# Maybe some network requests may cause the shell to freeze.
 
 # zmodload zsh/zprof
 
@@ -14,15 +15,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Plugin configs
 VSCODE=code
-
-# homebrew
-export HOMEBREW_NO_AUTO_UPDATE=1
-
-if [ "$(arch)" = "arm64" ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-    eval "$(/usr/local/bin/brew shellenv)"
-fi
 
 plugins=(
   rbenv
@@ -39,12 +31,11 @@ plugins=(
   vscode
   vi-mode
   kubectl
-  docker
   fzf-tab
   zsh-syntax-highlighting
   alias-finder
   aliases
-  mise zoxide poetry
+  zoxide poetry
   podman
 )
 
@@ -57,6 +48,7 @@ source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 export EDITOR='hx'
 export WORKSPACE="$HOME/Workspace"
+export DISABLE_TELEMETRY=1
 
 export HISTSIZE=1000000000
 export SAVEHIST=$HISTSIZE
@@ -81,6 +73,15 @@ alias bb="bun --bun"
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias luamake="/Users/wangjie/Workspace/wangjie/luamake/luamake"
 
+# homebrew
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+if [ "$(arch)" = "arm64" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 # GNU utils
 export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
@@ -89,7 +90,7 @@ export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="$PATH:$HOME/.cargo/bin"
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
-export PATH="$PATH:$HOME/.local/bin" # pipx
+export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.yarn/bin"
 
 export PATH="$PATH:$HOME/Workspace/flutter/bin"
@@ -102,7 +103,9 @@ export ANDROID_AVD_HOME="$HOME/.android/avd"
 export PATH=/usr/local/bin:$PATH
 export PATH="/opt/homebrew/bin:$PATH"
 
+eval "$(mise activate zsh)"
 eval "$(pay-respects zsh --alias)"
+eval "$(atuin init zsh --disable-up-arrow)"
 
 
 # source /Users/wangjie/.rvm/scripts/rvm
@@ -126,9 +129,6 @@ export PATH="/Users/wangjie/.bun/bin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# OpenClaw Completion
-# source "/Users/wangjie/.openclaw/completions/openclaw.zsh"
-
 # pnpm
 export PNPM_HOME="/Users/wangjie/Library/pnpm"
 case ":$PATH:" in
@@ -136,5 +136,34 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# >>> forge initialize >>>
+# !! Contents within this block are managed by 'forge zsh setup' !!
+# !! Do not edit manually - changes will be overwritten !!
+
+# Add required zsh plugins if not already present
+if [[ ! " ${plugins[@]} " =~ " zsh-autosuggestions " ]]; then
+    plugins+=(zsh-autosuggestions)
+fi
+if [[ ! " ${plugins[@]} " =~ " zsh-syntax-highlighting " ]]; then
+    plugins+=(zsh-syntax-highlighting)
+fi
+
+# Load forge shell plugin (commands, completions, keybindings) if not already loaded
+if [[ -z "$_FORGE_PLUGIN_LOADED" ]]; then
+    eval "$(forge zsh plugin)"
+fi
+
+# Load forge shell theme (prompt with AI context) if not already loaded
+if [[ -z "$_FORGE_THEME_LOADED" ]]; then
+    eval "$(forge zsh theme)"
+fi
+# <<< forge initialize <<<
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<
 
 # zprof
