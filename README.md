@@ -105,4 +105,5 @@ task ([`tasks/merge-claude-mcp.sh`](tasks/merge-claude-mcp.sh)), which renders
 - mise bootstrap is **experimental**; dry-run before applying.
 - `brew:` pours bottles into `/opt/homebrew` without Homebrew (coexists with a real
   brew) but has no `brew services`, and `brew-cask:` only handles app-bundle casks.
-- bun globals and vscode extensions are no longer managed here.
+- bun-global CLI tools are managed via mise's `npm:` backend (`conf.d/tools.toml`);
+  vscode extensions are not managed here.

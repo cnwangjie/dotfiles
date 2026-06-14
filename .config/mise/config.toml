@@ -30,6 +30,8 @@ dotfiles.root = "~/.dotfiles"
 auto_install = false
 not_found_auto_install = false
 
+npm.package_manager = "aube"
+
 # ---------------------------------------------------------------------------
 # Tools — language runtimes kept here in the core (they pin the dev baseline).
 # mise merges [tools] across config.toml + conf.d/tools.toml, so the bulkier
@@ -42,6 +44,7 @@ node   = "22.16.0"
 aube   = "latest"
 go     = "latest"
 herdr  = "latest"
+bun    = "latest"
 
 # ---------------------------------------------------------------------------
 # Dotfiles — symlink each managed file from the repo into $HOME.

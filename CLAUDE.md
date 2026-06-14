@@ -119,8 +119,10 @@ The committed `.claude/mcp-servers.json` has empty placeholder values.
   old `restart_service` on `cloudflared`/`smartdns` is dropped — start those
   manually. `brew-cask:` only supports app-bundle casks (dmg/zip/tar); a
   pkg-only cask will fail with a clear error.
-- bun globals and vscode extensions are **no longer managed here** (no native
-  mise backend). Install them by hand if needed.
+- bun-global **CLI tools** are now managed via mise's `npm:` backend in
+  `conf.d/tools.toml` (e.g. `npm:wrangler`, `npm:@openai/codex`). Plain libraries
+  that ship no binary (aws-sdk, googleapis, etc.) aren't mise tools — install
+  per-project. vscode extensions are still **not** managed here (no backend).
 - The `chezmoi-daily` skill under `.claude/skills/` documents the old chezmoi
   workflow and is now historical.
 

@@ -1,17 +1,15 @@
-# conf.d/tools.toml — the bulky cargo:/go:/pipx: backend tools mise puts on PATH.
+# conf.d/tools.toml — the bulky cargo:/go:/pipx:/npm: backend tools mise puts on PATH.
 # Merged into the global mise config via ~/.config/mise/conf.d/*.toml (the conf.d/
 # dir is symlinked from the repo by the [dotfiles] entry in ../config.toml). mise
 # merges [tools] across files, so language runtimes live in ../config.toml (the
 # core) and only these backend tools live here. Edit here; run `mise install`.
 #
-# Replaces the cargo/go/uv loops from the old install-packages script. bun
-# globals and vscode extensions were intentionally dropped in the migration
-# (no native mise backend; install them manually if needed).
+# Replaces the cargo/go/uv loops from the old install-packages script, plus the
+# bun-global CLI tools (now via the npm: backend, see below). vscode extensions
+# are still unmanaged (no backend); install them manually if needed.
 [tools]
 # former cargo_crates (dropped: cargo-binstall/cargo-update — mise handles
 # binstall internally; mise — self-managed; jj-cli — installed via brew)
-"cargo:ast-grep" = "latest"
-"cargo:bob-nvim" = "latest"
 "cargo:slumber"  = "latest"
 "cargo:zellij"   = "latest"
 
@@ -23,7 +21,6 @@
 "go:github.com/ramya-rao-a/go-outline"                  = "latest"
 "go:golang.org/x/tools/cmd/goimports"                   = "latest"
 "go:github.com/fatih/gomodifytags"                      = "latest"
-"go:github.com/haya14busa/goplay/cmd/goplay"            = "latest"
 "go:golang.org/x/tools/gopls"                           = "latest"
 "go:github.com/cweill/gotests/gotests"                  = "latest"
 "go:github.com/mitranim/gow"                            = "latest"
@@ -36,5 +33,17 @@
 "go:honnef.co/go/tools/cmd/staticcheck"                 = "latest"
 "go:github.com/pranshuparmar/witr/cmd/witr"             = "latest"
 
-# former uv_tools
-"pipx:pdm" = "latest"
+# former bun globals — the CLI tools (packages that ship a binary), now managed
+# via mise's npm: backend.
+"npm:@google/gemini-cli"            = "latest"  # gemini
+"npm:@larksuite/cli"                = "latest"  # lark-cli
+"npm:@mariozechner/pi-coding-agent" = "latest"  # pi
+"npm:@openai/codex"                 = "latest"  # codex
+"npm:bash-language-server"          = "latest"
+"npm:eas-cli"                       = "latest"  # eas
+"npm:files-sdk"                     = "latest"  # files
+"npm:kanban"                        = "latest"
+"npm:mcporter"                      = "latest"
+"npm:portless"                      = "latest"
+"npm:uipro-cli"                     = "latest"  # uipro
+"npm:wrangler"                      = "latest"
