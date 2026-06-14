@@ -9,9 +9,10 @@
 # runtimes ([tools]). The bulky, less-critical declarations live in sibling files
 # that mise merges automatically from ~/.config/mise/conf.d/*.toml (the conf.d/
 # dir is symlinked in by a [dotfiles] entry below):
-#   conf.d/tools.toml     [tools]              — cargo:/go:/pipx: backend tools
-#   conf.d/packages.toml  [bootstrap.packages] — Homebrew + login_shell
-#   conf.d/tasks.toml     [tasks.bootstrap]    — render+merge MCP servers
+#   conf.d/tools.toml     [tools]                    — cargo:/go:/pipx:/npm: tools
+#   conf.d/packages.toml  [bootstrap.packages]       — Homebrew + login_shell
+#   conf.d/macos.toml     [bootstrap.macos.defaults] — macOS user defaults
+#   conf.d/tasks.toml     [tasks.bootstrap]          — render+merge MCP servers
 #
 # Replaces the former chezmoi setup. `mise bootstrap` runs, in order:
 #   packages -> dotfiles -> macos-defaults -> launchd -> user -> tools -> task

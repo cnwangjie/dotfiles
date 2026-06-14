@@ -41,6 +41,7 @@ directory (one `[dotfiles]` entry, since that dir is wholly ours) into
 | `config.toml`          | `[tools]`              | language runtimes (java/python/node/go/…) — the dev baseline |
 | `conf.d/tools.toml`    | `[tools]`              | bulky backend tools (`cargo:`/`go:`/`pipx:`); merges with the above |
 | `conf.d/packages.toml` | `[bootstrap.packages]`, `[bootstrap.user]` | Homebrew formulae/casks + `login_shell` |
+| `conf.d/macos.toml`    | `[bootstrap.macos.defaults]` | macOS user defaults, dumped from the live system |
 | `conf.d/tasks.toml`    | `[tasks.bootstrap]`    | renders MCP servers from gopass, merges into `~/.claude.json` |
 
 ### Dotfiles (symlinks, not copies)

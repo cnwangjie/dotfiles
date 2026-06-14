@@ -1,0 +1,26 @@
+# conf.d/macos.toml — macOS user defaults (preferences), applied by
+# `mise bootstrap macos-defaults apply` (part of `mise bootstrap`). Merged into
+# the global config via the conf.d/ directory symlink. mise has no export
+# command, so this was dumped from the live system with `defaults read` and
+# captures only the keys that were actually set (unset keys left at OS default).
+#
+# Format: one inline table per preference domain; value type → `defaults write`
+# flag (bool→-bool, int→-int, float→-float, string→-string). The "friendly"
+# [bootstrap.macos.dock] etc. subsections from the docs are NOT supported by
+# this mise version — use these raw domain tables.
+#
+# Inspect drift: `mise bootstrap macos-defaults status`
+# Preview/apply: `mise bootstrap macos-defaults apply --dry-run` / `--yes`
+# https://mise.jdx.dev/bootstrap/macos-defaults.html
+
+[bootstrap.macos.defaults]
+# tilesize/largesize are floats and AppleShowAllFiles is a string as the live
+# system stores them — matched here so `status` reports no drift.
+"com.apple.dock" = { autohide = true, tilesize = 38.0, magnification = false, largesize = 16.0, "show-recents" = false, "mru-spaces" = false }
+
+"com.apple.finder" = { AppleShowAllFiles = "true", FXPreferredViewStyle = "icnv" }
+
+# global domain (NSGlobalDomain / `defaults read -g`); repeat rates stored as float
+"NSGlobalDomain" = { KeyRepeat = 2.0, InitialKeyRepeat = 15.0, "com.apple.keyboard.fnState" = true }
+
+"com.apple.AppleMultitouchTrackpad" = { Clicking = false, TrackpadThreeFingerDrag = false }
