@@ -78,6 +78,7 @@ bun    = "latest"
 "~/.hammerspoon/init.lua"     = "~/.dotfiles/.hammerspoon/init.lua"
 "~/.config/ghostty/config"    = "~/.dotfiles/.config/ghostty/config"
 "~/.config/helix/config.toml" = "~/.dotfiles/.config/helix/config.toml"
+"~/.config/herdr/config.toml" = "~/.dotfiles/.config/herdr/config.toml"
 "~/.config/zellij/config.kdl" = "~/.dotfiles/.config/zellij/config.kdl"
 "~/.config/zed/settings.json" = "~/.dotfiles/.config/zed/settings.json"
 

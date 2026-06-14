@@ -51,7 +51,7 @@ sync by the self-managing `~/.dotfiles` entry whose source is the repo's absolut
 path — relative would resolve against `dotfiles.root` and loop on itself). Every
 other `[dotfiles]` entry symlinks `~/<path>` → `~/.dotfiles/<path>` (same relative
 path on both sides). Mapped: `.config/mise/config.toml`, `.zshrc`, `.p10k.zsh`,
-`.hammerspoon/init.lua`, and `.config/{ghostty,helix,zellij,zed}/…`.
+`.hammerspoon/init.lua`, and `.config/{ghostty,helix,herdr,zellij,zed}/…`.
 
 The `.claude/*` files (`settings.json`, `hooks/`, `skills/`) are **tracked in git
 but intentionally NOT mise-synced** — manage/symlink them by hand. The exception is
