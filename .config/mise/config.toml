@@ -21,6 +21,15 @@
 experimental = true            # bootstrap/dotfiles are experimental (mise >= 2026.6.6)
 dotfiles.root = "~/.dotfiles"
 
+# Don't eagerly pull missing tools. The global [tools] list (esp. the 19 go:
+# binaries) is large and mostly uninstalled; with these on, mise's per-prompt
+# hook-env / command-not-found handler tried to `go install`/`cargo install`
+# them on *every* command and hung on the network. Install deliberately instead:
+# `mise install` (all) or `mise install go:…@latest` (one). Already-installed
+# tools (the go/node/python runtimes) still get their PATH set normally.
+auto_install = false
+not_found_auto_install = false
+
 # ---------------------------------------------------------------------------
 # Tools — language runtimes kept here in the core (they pin the dev baseline).
 # mise merges [tools] across config.toml + conf.d/tools.toml, so the bulkier
