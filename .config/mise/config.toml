@@ -5,11 +5,11 @@
 # is a symlink back to here. Edit here, then `mise bootstrap` (or `mise dotfiles
 # apply`) to converge.
 #
-# This core holds [settings], the [dotfiles] symlink map, and the language
-# runtimes ([tools]). The bulky, less-critical declarations live in sibling files
-# that mise merges automatically from ~/.config/mise/conf.d/*.toml (the conf.d/
+# This core holds [settings] and the [dotfiles] symlink map. The remaining
+# declarations live in sibling files that mise merges automatically from
+# ~/.config/mise/conf.d/*.toml (the conf.d/
 # dir is symlinked in by a [dotfiles] entry below):
-#   conf.d/tools.toml     [tools]                    — cargo:/go:/pipx:/npm: tools
+#   conf.d/tools.toml     [tools]                    — runtimes and backend tools
 #   conf.d/packages.toml  [bootstrap.packages]       — Homebrew + login_shell
 #   conf.d/macos.toml     [bootstrap.macos.defaults] — macOS user defaults
 #   conf.d/tasks.toml     [tasks.bootstrap]          — render+merge MCP servers
@@ -32,20 +32,6 @@ auto_install = false
 not_found_auto_install = false
 
 npm.package_manager = "aube"
-
-# ---------------------------------------------------------------------------
-# Tools — language runtimes kept here in the core (they pin the dev baseline).
-# mise merges [tools] across config.toml + conf.d/tools.toml, so the bulkier
-# cargo:/go:/pipx: backend tools live in conf.d/tools.toml.
-# ---------------------------------------------------------------------------
-[tools]
-java   = "openjdk-17"
-python = "latest"
-node   = "22.16.0"
-aube   = "latest"
-go     = "latest"
-herdr  = "latest"
-bun    = "latest"
 
 # ---------------------------------------------------------------------------
 # Dotfiles — symlink each managed file from the repo into $HOME.

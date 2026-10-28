@@ -1,3 +1,4 @@
+onboarding = false
 # herdr configuration
 # Place this file at ~/.config/herdr/config.toml
 
@@ -19,6 +20,7 @@ name = "catppuccin"
 # red = "#ff6188"
 # green = "#a6e3a1"
 
+auto_switch = false
 [terminal]
 # Executable used for new interactive panes.
 # Empty means $SHELL, then /bin/sh.
@@ -167,7 +169,8 @@ prompt_new_tab_name = false
 # accent = "cyan"
 
 # Background notification popup delivery
-agent_panel_scope = "all"
+show_agent_labels_on_pane_borders = false
+agent_panel_sort = "spaces"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
@@ -176,10 +179,9 @@ agent_panel_scope = "all"
 # delivery = "off"
 # delay_seconds = 1
 
+delivery = "system"
 [ui.toast.herdr]
 position = "top-right"
-
-[ui.toast.system]
 
 [ui.toast.clipboard]
 enabled = true
@@ -241,6 +243,7 @@ enabled = true
 # Values: block, steady_block (default), underline, steady_underline, bar, steady_bar.
 # cjk_ime_cursor_shape = "steady_block"
 
+pane_history = true
 [advanced]
 # Maximum scrollback buffer size in bytes retained per pane terminal.
 # Matches Ghostty's default scrollback-limit behavior.

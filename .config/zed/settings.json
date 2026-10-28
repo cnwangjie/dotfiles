@@ -7,6 +7,9 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "diff_view_style": "split",
+  "show_whitespaces": "all",
+  "tab_size": 2,
   "edit_predictions": {
     "provider": "codestral"
   },
@@ -21,6 +24,37 @@
           ]
         }
       ]
+    },
+    {
+      "host": "alex.lan",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/wangjie/Workspace"
+          ]
+        },
+        {
+          "paths": [
+            "/home/wangjie/Workspace/YouDub-webui"
+          ]
+        },
+        {
+          "paths": [
+            "/home/wangjie/Workspace/ai-gateway"
+          ]
+        },
+        {
+          "paths": [
+            "/home/wangjie/Workspace/litellm"
+          ]
+        }
+      ]
+    },
+    {
+      "host": "alex.lan",
+      "args": [],
+      "projects": []
     }
   ],
   "relative_line_numbers": "enabled",
@@ -37,6 +71,12 @@
     "copy_on_select": true,
   },
   "agent_servers": {
+    "grok-build": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "type": "registry"
+    },
     "pi-acp": {
       "type": "registry",
     },
